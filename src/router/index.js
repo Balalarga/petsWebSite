@@ -4,6 +4,7 @@ import Home from '@/components/Home.vue'
 import Info from '@/components/Info'
 import AboutUs from '@/components/AboutUs'
 import PrivateOffice from '@/views/PrivateOffice'
+import Registration from '@/components/aut/registration'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,10 @@ const routes = [
   {
     path: '/PrivateOffice',
     component: PrivateOffice
+  },
+  {
+    path: '/Registration',
+    component: Registration
   }
 ]
 
