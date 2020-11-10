@@ -37,7 +37,7 @@ export default {
         {title:'Объявления', link:'/'},
         {title:'Интересное', link:'/Info'},
         {title:'О нас', link:'/AboutUs'},
-        {icon:'mdi-account'}
+        {icon:'mdi-account', link:'/PrivateOffice'}
       ]
     }
   }

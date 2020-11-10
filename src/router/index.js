@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/components/Home.vue'
 import Info from '@/components/Info'
 import AboutUs from '@/components/AboutUs'
+import PrivateOffice from '@/views/PrivateOffice'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,10 @@ const routes = [
   {
     path: '/AboutUs',
     component: AboutUs
+  },
+  {
+    path: '/PrivateOffice',
+    component: PrivateOffice
   }
 ]
 
