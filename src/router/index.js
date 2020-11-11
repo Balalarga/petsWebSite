@@ -5,6 +5,7 @@ import Info from '@/components/Info'
 import AboutUs from '@/components/AboutUs'
 import PrivateOffice from '@/views/PrivateOffice'
 import Registration from '@/components/aut/registration'
+import Logining from '@/components/aut/logining'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ const routes = [
   {
     path: '/Registration',
     component: Registration
+  },
+  {
+    path: '/log',
+    component: Logining
   }
 ]
 

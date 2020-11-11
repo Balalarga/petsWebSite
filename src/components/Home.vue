@@ -1,4 +1,5 @@
 <template>
+
     <v-item-group active-class="primary">
         <v-container fluid>
             <v-radio-group v-model="row" row mandatory>  
@@ -55,6 +56,7 @@
         </v-layout>
     </v-container>
     </v-item-group>
+    
 </template>
 
 <script>
