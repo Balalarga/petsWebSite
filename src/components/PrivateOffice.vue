@@ -139,13 +139,24 @@
 
               <v-row class="text-center">
                 <v-col>
+                  <v-btn small rounded dark color="light-green">
+                    Добавить объявление
+                    <v-icon small dark>
+                     mdi-plus-circle-outline
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+
+              <v-row class="text-center">
+                <v-col>
                   <h2 class="profile-name">История объявлений</h2>
                 </v-col>
               </v-row>
 
               <v-row>
                 <v-col>
-                  <v-btn
+                  <v-btn :to="{name: 'Announcement',params: {id: 1}}"
                     dark
                     x-large
                     color="grey lighten-1"
