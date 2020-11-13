@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row>
+    <v-row v-for="item in items" :key="item.id">
 
       <v-col>
         <v-row>
@@ -39,6 +39,7 @@
               label="Имя"
               rounded
               solo
+              v-model="item.name"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -51,6 +52,7 @@
               label="eMail"
               rounded
               solo
+              v-model="item.eMail"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -63,6 +65,7 @@
               label="Телефон"
               rounded
               solo
+              v-model="item.phone"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -75,6 +78,7 @@
               label="Название организации"
               rounded
               solo
+              v-model="item.nameOrg"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -87,6 +91,7 @@
               label="Сайт организации"
               rounded
               solo
+              v-model="item.webOrg"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -184,6 +189,12 @@
 
 export default{
 
+  items: [],
+
+  created: function () {
+    this.items = this.$store.getters['privateOffice/getPrivateOffice']
+    console.log(this.items)
+  }
 }
 </script>
 <style scoped>

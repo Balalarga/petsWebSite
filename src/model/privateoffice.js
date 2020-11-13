@@ -1,4 +1,3 @@
-
 const DATA = [{
   id: 1,
   name: 'Андрей',
@@ -8,19 +7,4 @@ const DATA = [{
   webOrg: 'organization.com'
 }]
 
-export default {
-
-  namespaced: true,
-
-  state: {
-    announecement: DATA
-  },
-
-  getters: {
-
-    getPrivateOffice(state) {
-      return state.announecement
-    }
-  }
-
-}
+export default DATA
