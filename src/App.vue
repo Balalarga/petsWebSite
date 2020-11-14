@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="[{background:'url(https://i.pinimg.com/736x/58/06/30/5806308614ce9a80f25fa0db49016fe4.jpg)  no-repeat'},{backgroundSize:'cover'}]">
+  <v-app :style="[{background:'url(http://st.gde-fon.com/wallpapers_original/428142_koshka_kotenok_igrushka_igra_perya_1920x1200_www.Gde-Fon.com.jpg)  no-repeat'},{backgroundSize:'cover'}]">
     <v-app-bar color="rgba(255,255,255, 0.6)" flat  app>
       <v-toolbar-title>YOUR friends</v-toolbar-title>
       <v-spacer></v-spacer>
