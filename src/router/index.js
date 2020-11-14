@@ -7,6 +7,7 @@ import PrivateOffice from '@/components/PrivateOffice'
 import Registration from '@/components/aut/registration'
 import Logining from '@/components/aut/logining'
 import Announcement from '@/components/Announcement'
+import PostDetails from '@/components/PostDetails'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/Announcement/:id',
     name: 'Announcement',
     component: Announcement
+  },
+  {
+    path: '/PostDetails/:id',
+    name: 'PostDetails',
+    component: PostDetails
   }
 ]
 
