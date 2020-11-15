@@ -33,6 +33,9 @@
       max-width="290"
     >
       <v-card>
+        <v-btn icon @click="dialog = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
         <v-card-title class="headline">
           Заригистрированны у нас?
         </v-card-title>

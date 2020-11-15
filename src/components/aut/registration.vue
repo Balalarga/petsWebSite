@@ -8,7 +8,7 @@
                     </v-col>
                 </v-row>
                 <v-row justify="left">
-                    <v-card ref="form" color="transparent" elevation="0" min-width="350">
+                    <v-form ref="form" color="transparent" elevation="0" min-width="350" v-model="isFormValid">
                         <v-card-text>
                             <v-text-field
                                 ref="name"
@@ -67,31 +67,15 @@
                             </v-row>
                         </v-card-text>
                         <v-card-actions>
-                            <v-slide-x-reverse-transition>
-                                <v-tooltip v-if="formHasErrors" left>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                            icon
-                                            class="my-0"
-                                            v-bind="attrs"
-                                            @click="resetForm"
-                                            v-on="on"
-                                        >
-                                            <v-icon>mdi-refresh</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>Обновить форму</span>
-                                </v-tooltip>
-                            </v-slide-x-reverse-transition>
-                            <v-btn
-                                min-width="320" 
-                                @click="submit"
-                                rounded  color="light-green" :disabled="!enabled"
-                            >
-                                Регистрация
-                            </v-btn>
+                          <v-btn
+                            min-width="320" 
+                            @click="submit"
+                            rounded  color="light-green" :disabled="(!isFormValid) || (!enabled)"
+                          >
+                            Регистрация
+                          </v-btn>
                         </v-card-actions>
-                    </v-card>
+                    </v-form>
                 </v-row>
             </v-col>   
         </v-row>
@@ -102,13 +86,14 @@
 <script>
   export default {
     data: () => ({
-     errorMessages: '',
-     errorPass: '',
+      errorMessages: '',
+      errorPass: '',
       name: null,
       email: null,
       pass: null,
       passconf: null,
       formHasErrors: false,
+      isFormValid: false,
       enabled: false,
         rules: [
             value => !!value || 'Required.',
@@ -134,12 +119,15 @@
     },
 
     methods: {
-        passCheck () {
-            this.errorPass = this.pass && this.passCheck
-            ? `Пароли не совпадают!`
-            : ''
-          return true
-        },
+      passCheck () {
+          this.errorPass = !(this.pass === this.passconf)
+          ? `Пароли не совпадают!`
+          : '';
+          this.en1 = !(this.pass === this.passconf)
+          ? false
+          : true
+        return true
+      },
       emailCheck () {
         this.errorMessages = this.email && !this.name
           ? `Hey! I'm required`

@@ -8,7 +8,7 @@
                     </v-col>
                 </v-row>
                 <v-row justify="left">
-                    <v-card ref="form" color="transparent" elevation="0" min-width="350">
+                    <v-form v-model="enabled" ref="form" color="transparent" elevation="0" min-width="350">
                         <v-card-text>
                             
                             <v-text-field
@@ -42,7 +42,8 @@
                             class="mb-3 ml-4"
                                 min-width="320" 
                                 @click="submit"
-                                rounded  color="light-green" 
+                                
+                                rounded  color="transperent" 
                             >
                                 Забыли пароль?
                             </v-btn>
@@ -50,13 +51,14 @@
                             <v-btn class="mb-3 ml-4"
                                 min-width="320" 
                                 @click="submit"
+                                :disabled="!enabled"
                                 rounded  color="light-green" 
                             >
-                                Регистрация
+                                Войти
                             </v-btn>
                             </v-row>
                         </v-card-actions>
-                    </v-card>
+                    </v-form>
                 </v-row>
             </v-col>   
         </v-row>
