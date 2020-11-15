@@ -15,6 +15,12 @@
           <v-icon>{{item.icon}}</v-icon> 
           {{item.title}}
         </v-btn>
+        <v-btn 
+          color="transparent" 
+          depressed
+        >
+          <v-icon @click="accountButton()">mdi-account</v-icon> 
+        </v-btn>
       </v-toolbar-items>
     </v-app-bar>
     
@@ -74,6 +80,7 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data (){
     return{
@@ -81,9 +88,16 @@ export default {
       menuItems: [
         {title:'Объявления', link:'/'},
         {title:'Интересное', link:'/Info'},
-        {title:'О нас', link:'/AboutUs'},
-        {icon:'mdi-account', link:'/PrivateOffice'}
+        {title:'О нас', link:'/AboutUs'}
       ]
+    }
+  },
+  methods:{
+    accountButton(){
+      if(store.getters.checkUser)
+        console.log("No auth")
+      else
+        this.$router.push('/PrivateOffice')
     }
   }
 };

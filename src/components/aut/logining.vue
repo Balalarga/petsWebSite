@@ -67,8 +67,8 @@
 <script>
   export default {
     data: () => ({
-     errorMessages: '',
-     errorPass: '',
+      errorMessages: '',
+      errorPass: '',
       email: null,
       pass: null,
       formHasErrors: false,
@@ -82,10 +82,8 @@
     computed: {
       form () {
         return {
-          name: this.name,
           email: this.email,
           pass: this.pass,
-          passconf: this.passconf,
         }
       },
     },
@@ -119,14 +117,21 @@
           this.$refs[f].reset()
         })
       },
-      submit () {
+      async submit () {
         this.formHasErrors = false
 
         Object.keys(this.form).forEach(f => {
           if (!this.form[f]) this.formHasErrors = true
 
-          this.$refs[f].validate(true)
+          //this.$refs[f].validate(true)
         })
+        console.log(this.form)
+        try{
+          await this.$store.dispatch('login', this.form)
+          this.$router.push('/')
+        } catch(e){
+          console.log(e)
+        }
       },
     },
   }
