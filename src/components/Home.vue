@@ -29,9 +29,9 @@
               align-self="center"
               align-items: center
               class="square rounded-xl ml-2"
-              color="rgba(255,255,255, 0.8)"
+              color="grey lighten-1"
               :to="{name: 'PostDetails',params: {id: pet.id}}">
-              <div class="text-center pt-2">
+              <div class="text-center">
                 <span>{{pet.name}}</span>
                 <p>{{pet.age}}</p>
               </div>

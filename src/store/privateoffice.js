@@ -11,6 +11,6 @@ export default {
   getters: {
     getPrivateOffice(state) {
       return state.announecement
-    }
+    },
   }
 }

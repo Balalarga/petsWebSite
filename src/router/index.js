@@ -14,24 +14,24 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
-    path: '/Info',
+    path: '/info',
     component: Info
   },
   {
-    path: '/AboutUs',
+    path: '/aboutUs',
     component: AboutUs
   },
   {
-    path: '/PrivateOffice',
+    path: '/privateoffice',
     name: 'PrivateOffice',
     component: PrivateOffice
   },
   {
-    path: '/Registration',
+    path: '/registration',
     component: Registration
   },
   {
@@ -39,12 +39,12 @@ const routes = [
     component: Logining
   },
   {
-    path: '/Announcement/:id',
+    path: '/announcement/:id',
     name: 'Announcement',
     component: Announcement
   },
   {
-    path: '/PostDetails/:id',
+    path: '/postdetails/:id',
     name: 'PostDetails',
     component: PostDetails
   }
