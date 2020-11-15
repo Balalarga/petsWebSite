@@ -42,6 +42,9 @@ export default{
       getUid(){
         const user = firebase.auth().currentUser;
         return user ? user.uid: null;
+      },
+      loggedUser({commit}, user){
+        commit('setUser', user)
       }
     },
     getters:{
