@@ -47,6 +47,8 @@
         <v-row>
           <v-col align="center">
             <v-text-field
+              ref="name"
+              v-model="name"
               label="Введите имя и возраст"
               rounded
               solo
@@ -59,6 +61,8 @@
         <v-row>
           <v-col align="center">
             <v-textarea
+              ref="description"
+              v-model="description"
               rows="12"
               solo
               label="Введите текст объявления"
@@ -69,7 +73,7 @@
 
         <v-row>
           <v-col class="text-right">
-            <v-btn :to="{name: 'Home'}" large dark color="light-green">
+            <v-btn @click="submit()" large dark color="light-green">
               Опубликовать
             </v-btn>
           </v-col>
@@ -84,9 +88,37 @@
 </template>
 
 <script>
-
+import firebase from 'firebase/app'
 export default{
-
+  data(){
+    return{
+      name: null,
+      photo: null,
+      description: null
+    }
+  },
+  methods:{
+    async submit(){
+      try{
+        if(this.name == null || this.description == null){
+          console.log("No data in fields")
+          return;
+        }
+        const userData = this.$store.getters.user
+        const petsData = firebase.database().ref('/pets')
+        const newPet = petsData.push()
+        console.log(userData)
+        await newPet.set({
+            name: this.name,
+            description: this.description,
+            parent: userData.uid
+          })
+        console.log("Data saved")
+      }catch(e){
+        console.log(e)  
+      }
+    }
+  }
 }
 </script>
 <style scoped>

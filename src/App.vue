@@ -120,8 +120,77 @@
   </v-app>
 </template>
 
+<style >
+*{
+	margin:0px;
+	padding:0px;
+	font-family: Roboto, normal;
+	word-wrap:break-word;
+	text-decoration: none;
+	bborder: 1px solid;
+}
+body{
+  background-image: url('./img/back.jpg');
+  background-size: cover;
+}
+
+.f_logo{
+	width:200px;
+	height:auto;
+	min-width:200px;
+	min-height:auto;
+}
+#f_inf{
+	color:#05441A !important;
+}
+#f_inf2{
+	margin-top:40px;
+	color:#FFFFFF;
+}
+.w_text_f{
+	color: #FFFFFF !important;
+}
+.g_text_f{
+	font-size: 12px !important;
+	color:#05441A !important;
+}
+.footer_images{
+	width:32px;
+	height:32px;
+	margin-right:10px;
+}
+.footer{
+	display:flex;
+	justify-content: space-around;
+	width:100%;
+	background-color:#B7B7B7;
+}
+.f_col_1{
+	width:20%;
+	overflow:hidden;
+}
+.f_col_2{
+	width:10%;
+}
+.f_col_345{
+	width:20%;
+}
+.f_cols{
+	display:flex;
+	flex-direction:column;
+	padding-top:15px;
+}
+.f_col_2_pad{
+	margin-bottom:15px;
+}
+.f_ikonka{
+	display:flex;
+	padding-top:20px;
+	align-items:center;
+}
+</style>
+
 <script>
-import store from '@/store'
 export default {
   data (){
     return{
@@ -135,10 +204,11 @@ export default {
   },
   methods:{
     accountButton(){
-      if(store.getters.checkUser)
-        this.dialog = true
+      console.log("User at button " + this.$store.getters.user)
+      if(this.$store.getters.user)
+        this.$router.replace({ name: "PrivateOffice" });
       else
-        this.$router.push('/PrivateOffice')
+        this.dialog = true
     }
   }
 };

@@ -6,7 +6,8 @@ export default{
     },
     mutations:{
       setUser(state, uid){
-        state.user = uid
+        console.log(uid);
+        state.user = uid == undefined ? null : uid
       }
     },
     actions:{
@@ -19,8 +20,14 @@ export default{
           console.log(e);
         }
       },
-      async logout(){
-        await firebase.auth().signOut();
+      async logout(state){
+        console.log("Logout " + state.user)
+        state.user = null
+        try{
+          await firebase.auth().signOut();
+        }catch (e){
+          console.log(e)
+        }
       },
       async register({dispatch, commit}, {email, pass, name}) {
         try{
@@ -35,6 +42,8 @@ export default{
             photo: "",
             pets: []
           })
+          console.log("User registered " + uid)
+          console.log("Current user " + this.user)
         }catch (e){
           console.log(e);
         }
@@ -45,14 +54,15 @@ export default{
       },
       loggedUser({commit}, user){
         commit('setUser', user)
+      },
+      userAutorized(state){
+        console.log("User state " + state.user)
+        return state.user;
       }
     },
     getters:{
       user(state){
         return state.user
       },
-      checkUser(state){
-        return state.user == null;
-      }
     }
 }
