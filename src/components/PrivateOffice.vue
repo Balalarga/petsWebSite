@@ -192,10 +192,10 @@ export default{
   data(){
     return {
       item: {
-        name: "",
-        phone: "",
-        organization: "",
-        site: "",
+        name: "None",
+        phone: "None",
+        organization: "None",
+        site: "None",
         userImageString: "https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg",
         userImage: null,
         orgImageString: "",
@@ -205,18 +205,28 @@ export default{
     }
   },
   mounted: async function () {
+    if(!this.$store.getters.user){
+      return
+    }
     while(!this.$store.getters.getUserData){
+      console.log("Waiting...")
        await this.sleep(500)
     }
-    const userData = this.$store.getters.getUserData
-    console.log("data "+this.$store.getters.getUserData)
-    this.item.name = userData.name
-    this.item.phone = userData.phone
-    this.item.email = userData.email
-    this.item.organization = userData.organization
-    this.item.site = userData.site
-    this.item.userImageString = userData.userImage ? userData.userImage : this.item.userImageString
-    this.item.orgImageString =  userData.orgImage ? userData.orgImage : null
+    const uid = await this.$store.dispatch('getUid')
+    const promise = await firebase.database().ref("users/"+uid+'/data')
+    promise.on('value', function(data){
+        return data.val()
+    }).then((userData)=>{
+        console.log("data "+this.$store.getters.getUserData)
+        this.item.name = userData.name
+        this.item.phone = userData.phone
+        this.item.email = userData.email
+        this.item.organization = userData.organization
+        this.item.site = userData.site
+        this.item.userImageString = userData.userImage ? userData.userImage : this.item.userImageString
+        this.item.orgImageString =  userData.orgImage ? userData.orgImage : null
+      })
+    // const userData = this.$store.getters.getUserData
   },
   methods:{
     onUserFilePicked(event){
@@ -256,8 +266,11 @@ export default{
     },
     async logout(){
       console.log("Logout")
-      await this.$store.dispatch('logout')
-      this.$router.push("home")
+      this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/')
+          this.$router.go()
+        })
     },
     async saveUserData(){
       const uid = await this.$store.dispatch('getUid')
@@ -270,6 +283,7 @@ export default{
         orgImage: this.item.orgImageString
       })
       console.log("Data saved")
+      this.$router.go()
     }
   }
 }

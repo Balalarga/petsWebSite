@@ -2,18 +2,13 @@ import firebase from 'firebase/app'
 
 export default{
     state:{
-      user: null,
-      userData: null
+      user: null
     },
     mutations:{
-      async setUser(state, user){
+      setUser(state, user){
         console.log(user);
         if(user){
           state.user = user
-          const userData = await firebase.database().ref("users/"+user.uid+'/data')
-          userData.on('value', function(data){
-            state.userData = data.val()
-          })
         }
       }
     },
@@ -27,8 +22,7 @@ export default{
           console.log(e);
         }
       },
-      async logout(state){
-        console.log("Logout " + state.user)
+     async logout(state){
         state.user = null
         try{
           await firebase.auth().signOut();
@@ -48,8 +42,6 @@ export default{
             phone: "",
             photo: ""
           })
-          console.log("User registered " + uid)
-          console.log("Current user " + this.user)
         }catch (e){
           console.log(e);
         }
@@ -63,15 +55,12 @@ export default{
       },
       userAutorized(state){
         console.log("User state " + state.user)
-        return state.user;
+        return state.user?true:false;
       }
     },
     getters:{
       user(state){
         return state.user
-      },
-      getUserData(state){
-        return state.userData
       }
     }
 }
