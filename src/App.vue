@@ -187,7 +187,6 @@ body{
 </style>
 
 <script>
-import store from '@/store'
 export default {
   data (){
     return{
@@ -201,10 +200,11 @@ export default {
   },
   methods:{
     accountButton(){
-      if(store.getters.checkUser)
-        this.dialog = true
+      console.log("User at button " + this.$store.getters.user)
+      if(this.$store.getters.user)
+        this.$router.replace({ name: "PrivateOffice" });
       else
-        this.$router.push('/PrivateOffice')
+        this.dialog = true
     }
   }
 };

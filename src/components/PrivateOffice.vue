@@ -129,6 +129,13 @@
             </v-btn>
           </v-col>
         </v-row>
+        <v-row class="text-center">
+          <v-col>
+            <v-btn rounded dark color="light-green" @click="logout()">
+              Выйти из профиля
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
 
       <v-col>
@@ -186,14 +193,19 @@
 </template>
 
 <script>
-
 export default{
 
   items: [],
 
   created: function () {
     this.items = this.$store.getters['privateOffice/getPrivateOffice']
-    console.log(this.items)
+  },
+  methods:{
+    async logout(){
+      console.log("Logout")
+      await this.$store.dispatch('logout')
+      this.$router.push("home")
+    }
   }
 }
 </script>
