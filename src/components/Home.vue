@@ -50,7 +50,7 @@
                   :to="{name: 'PostDetails',params: {id: pet.id}}">
               <div class="text-center">
                 <span>{{pet.name}}</span>
-                <p>{{pet.age}}</p>
+                <!--<p>{{pet.age}}</p>-->
               </div>
             </v-card>
           </v-col>
@@ -65,12 +65,12 @@
 </template>
 
 <script>
-
+import firebase from 'firebase/app'
 export default {
 
   data (){
     return{
-        items: [
+      items: [
         { title: 'Click Me' },
         { title: 'Click Me' },
         { title: 'Click Me' },
@@ -90,6 +90,19 @@ export default {
       ]
     }
   },
-
+  async mounted(){
+      const pets = await firebase.database().ref('pets').orderByChild('date')
+      let allPets = []
+      pets.on("value",function(snapshot){
+        // console.log(snapshot)
+        snapshot.forEach(function(child){
+          let data = child.toJSON()
+          data['id'] = child.key
+          console.log(data)
+          allPets.push(data)
+        })
+      })
+      this.petsInfo = allPets
+  }
 };
 </script>

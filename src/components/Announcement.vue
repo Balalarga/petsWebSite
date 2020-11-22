@@ -108,10 +108,15 @@ export default{
         const petsData = firebase.database().ref('/pets')
         const newPet = petsData.push()
         console.log(userData)
+        const currDate = new Date()
+        const dd = String(currDate.getDate()).padStart(2, '0');
+        const mm = String(currDate.getMonth() + 1).padStart(2, '0');
+        const yyyy = currDate.getFullYear();
         await newPet.set({
             name: this.name,
             description: this.description,
-            parent: userData.uid
+            parent: userData.uid,
+            date: mm + '/' + dd + '/' + yyyy
           })
         console.log("Data saved")
       }catch(e){
