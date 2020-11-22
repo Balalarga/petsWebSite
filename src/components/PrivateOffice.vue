@@ -1,7 +1,5 @@
 <template>
   <v-container fluid>
-    <v-row v-for="item in items" :key="item.id">
-
       <v-col>
         <v-row>
           <v-col align="center">
@@ -49,19 +47,6 @@
         <v-row>
           <v-col>
             <v-text-field
-              label="eMail"
-              rounded
-              solo
-              v-model="item.eMail"
-              dense
-              background-color="grey lighten-2">
-            </v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-text-field
               label="Телефон"
               rounded
               solo
@@ -78,7 +63,7 @@
               label="Название организации"
               rounded
               solo
-              v-model="item.nameOrg"
+              v-model="item.organization"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -91,7 +76,7 @@
               label="Сайт организации"
               rounded
               solo
-              v-model="item.webOrg"
+              v-model="item.site"
               dense
               background-color="grey lighten-2">
             </v-text-field>
@@ -124,8 +109,8 @@
 
         <v-row class="text-center">
           <v-col>
-            <v-btn rounded dark color="light-green">
-              Редактировать страницу
+            <v-btn @click="saveUserData" rounded dark color="light-green">
+              Сохранить изменения
             </v-btn>
           </v-col>
         </v-row>
@@ -168,7 +153,7 @@
 
               <v-row>
                 <v-col>
-                  <v-btn :to="{name: 'Announcement',params: {id: 1}}"
+                  <v-btn :to="{name: 'Announcement'}"
                     dark
                     x-large
                     color="grey lighten-1"
@@ -188,23 +173,53 @@
         </v-row>
       </v-col>
 
-    </v-row>
   </v-container>
 </template>
 
 <script>
+import firebase from 'firebase/app'
 export default{
-
-  items: [],
-
-  created: function () {
-    this.items = this.$store.getters['privateOffice/getPrivateOffice']
+  data(){
+    return {
+      item: {
+        name: "",
+        phone: "",
+        organization: "",
+        site: "",
+        pets:[]
+      }
+    }
+  },
+  mounted: async function () {
+    while(!this.$store.getters.getUserData){
+       await this.sleep(500)
+    }
+    console.log("data "+this.$store.getters.getUserData)
+    this.item.name = this.$store.getters.getUserData.name
+    this.item.phone = this.$store.getters.getUserData.phone
+    this.item.email = this.$store.getters.getUserData.email
+    this.item.organization = this.$store.getters.getUserData.organization
+    this.item.site = this.$store.getters.getUserData.site
   },
   methods:{
+    async sleep(ms){
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     async logout(){
       console.log("Logout")
       await this.$store.dispatch('logout')
       this.$router.push("home")
+    },
+    async saveUserData(){
+      const uid = await this.$store.dispatch('getUid')
+      await firebase.database().ref('users/'+uid+'/data').set({
+        name: this.item.name,
+        organization: this.item.organization,
+        site: this.item.site,
+        phone: this.item.phone
+        // photo: this.item.
+      })
+      console.log("Data saved")
     }
   }
 }
