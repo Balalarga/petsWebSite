@@ -25,6 +25,9 @@
                             <v-text-field
                                 ref="pass"
                                 v-model="pass"
+                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show1 ? 'text' : 'password'"
+                                @click:append="show1 = !show1"
                                 :rules="[() => !!pass || 'Поле обязательное для заполнения', emailCheck]"
                                 placeholder="Пароль"
                                 required
@@ -73,6 +76,7 @@
       errorPass: '',
       email: null,
       pass: null,
+      show1: false,
       formHasErrors: false,
       enabled: false,
         rules: [

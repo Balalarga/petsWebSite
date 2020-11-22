@@ -25,7 +25,7 @@
                             <v-text-field
                                 ref="email"
                                 v-model="email"
-                                :rules="[() => !!email || 'Поле обязательное для заполнения',emailCheck]"
+                                :rules="[() => !!email || 'Поле обязательное для заполнения',v => /.+@.+\..+/.test(v) || 'Вы ввели неправильный email!']"
                                 placeholder="Электронный адрес"
                                 required
                                 rounded
@@ -36,7 +36,10 @@
                             <v-text-field
                                 ref="pass"
                                 v-model="pass"
-                                :rules="[() => !!pass || 'Поле обязательное для заполнения', emailCheck]"
+                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show1 ? 'text' : 'password'"
+                                @click:append="show1 = !show1"
+                                :rules="[() => !!pass || 'Поле обязательное для заполнения',v => (v && v.length >= 6) || 'Пароль должен быть не менее 6 символов', emailCheck]"
                                 placeholder="Придумайте пароль"
                                 required
                                 rounded
@@ -47,6 +50,9 @@
                             <v-text-field
                                 ref="passconf"
                                 v-model="passconf"
+                                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show2 ? 'text' : 'password'"
+                                @click:append="show2 = !show2"
                                 :rules="[() => !!passconf || 'Поле обязательное для заполнения', passCheck]"
                                 :error-messages="errorPass"
                                 required
@@ -92,6 +98,8 @@
       email: null,
       pass: null,
       passconf: null,
+      show1: false,
+      show2: false,
       formHasErrors: false,
       isFormValid: false,
       enabled: false,
