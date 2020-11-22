@@ -2,12 +2,19 @@ import firebase from 'firebase/app'
 
 export default{
     state:{
-      user: null
+      user: null,
+      userData: null
     },
     mutations:{
-      setUser(state, uid){
-        console.log(uid);
-        state.user = uid == undefined ? null : uid
+      async setUser(state, user){
+        console.log(user);
+        if(user){
+          state.user = user
+          const userData = await firebase.database().ref("users/"+user.uid+'/data')
+          userData.on('value', function(data){
+            state.userData = data.val()
+          })
+        }
       }
     },
     actions:{
@@ -34,13 +41,12 @@ export default{
           await firebase.auth().createUserWithEmailAndPassword(email, pass);
           const uid = await dispatch('getUid');
           commit("setUser", uid)
-          await firebase.database().ref('/users/'+uid+'/info').set({
+          await firebase.database().ref('users/'+uid+'/data').set({
             name: name,
             organization: "",
             site: "",
             phone: "",
-            photo: "",
-            pets: []
+            photo: ""
           })
           console.log("User registered " + uid)
           console.log("Current user " + this.user)
@@ -64,5 +70,8 @@ export default{
       user(state){
         return state.user
       },
+      getUserData(state){
+        return state.userData
+      }
     }
 }

@@ -39,7 +39,7 @@ const routes = [
     component: Logining
   },
   {
-    path: '/announcement/:id',
+    path: '/announcement',
     name: 'Announcement',
     component: Announcement
   },

@@ -204,7 +204,6 @@ export default {
   },
   methods:{
     accountButton(){
-      console.log("User at button " + this.$store.getters.user)
       if(this.$store.getters.user)
         this.$router.replace({ name: "PrivateOffice" });
       else
