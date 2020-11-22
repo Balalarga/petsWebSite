@@ -20,23 +20,31 @@
           <v-col align="center">
             <v-avatar
               color="grey lighten-1"
-              size="135">
-              <img src="https://i7.uihere.com/icons/164/844/1/add-to-f85757c8d1cd8ca171d544eb839b65c3.png">
+              size="300">
+              <img :src="photo">
             </v-avatar>
           </v-col>
         </v-row>
 
       <v-row>
         <v-col align="center">
-          <v-btn large dark color="light-green">
+          <v-btn 
+          large dark color="light-green"
+            @click='pickImage'>
             Добавить фото
           </v-btn>
+          <input type='file'
+            style='display: none'
+            ref='fileInput'
+            accept='image/*'
+            @change="onPickImage">
         </v-col>
       </v-row>
 
       <v-row>
         <v-col align="center">
-          <v-btn large dark color="grey lighten-1">
+          <v-btn large dark color="grey lighten-1"
+          @click='deletePhoto'>
             Удалить фото
           </v-btn>
         </v-col>
@@ -93,11 +101,29 @@ export default{
   data(){
     return{
       name: null,
-      photo: null,
+      photo: "https://i.pinimg.com/474x/64/49/b1/6449b12a5936e6b68249c38e0cd16cb6.jpg",
       description: null
     }
   },
   methods:{
+    deletePhoto(){
+      this.photo = 'https://i.pinimg.com/474x/64/49/b1/6449b12a5936e6b68249c38e0cd16cb6.jpg'
+    },
+    pickImage(){
+      this.$refs.fileInput.click()
+    },
+    onPickImage(event){
+      const files = event.target.files
+      let filename = files[0].name
+      if(filename.lastIndexOf('.')<=0){
+        return alert("Файл поврежден")
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', ()=>{
+        this.photo = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+    },
     async submit(){
       try{
         if(this.name == null || this.description == null){
@@ -116,7 +142,8 @@ export default{
             name: this.name,
             description: this.description,
             parent: userData.uid,
-            date: mm + '/' + dd + '/' + yyyy
+            date: mm + '/' + dd + '/' + yyyy,
+            photo:this.photo
           })
         console.log("Data saved")
       }catch(e){

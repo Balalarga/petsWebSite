@@ -13,7 +13,7 @@
             <v-avatar
               color="grey lighten-1"
               size="200">
-              <img v-bind:src="item.img">
+              <img v-bind:src="item.photo">
             </v-avatar>
           </v-col>
         </v-row>
@@ -148,7 +148,7 @@ export default{
     return{
       item: {
         name: "text",
-        img: null
+        photo: null
       }
     }
   },
@@ -161,7 +161,7 @@ export default{
     this.item.name = curItem.name
     this.item.description = curItem.description
     this.item.parent = curItem.parent
-    this.item.img = curItem.img
+    this.item.photo = curItem.photo
   }
 }
 </script>

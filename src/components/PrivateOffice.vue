@@ -12,16 +12,22 @@
             <v-avatar
               color="grey lighten-1"
               size="248">
-              <img src="https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg">
+              <img :src="item.userImageString">
             </v-avatar>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col align="center">
-            <v-btn rounded dark color="light-green">
+            <v-btn rounded dark color="light-green" @click='pickUserImage'>
               Изменить фото
             </v-btn>
+            <input type='file'
+              style='display: none'
+              ref='userFileInput'
+              accept='image/*'
+              @change="onUserFilePicked">
+
           </v-col>
         </v-row>
       </v-col>
@@ -86,6 +92,7 @@
         <v-row>
           <v-col class="text-center">
             <v-btn 
+              @click='pickOrgImage'
               x-large 
               color="grey lighten-2"
               class="mx-2">
@@ -93,6 +100,11 @@
                 mdi-plus
               </v-icon>
             </v-btn>
+            <input type='file'
+            style='display: none'
+            ref='orgFileInput'
+            accept='image/*'
+            @change="onOrgFilePicked">
           </v-col>
           <v-col left>
             Загрузить/изменить логотип организации
@@ -165,9 +177,7 @@
                   </v-btn>
                 </v-col>
               </v-row>
-
             </v-card>
-
           </v-col>
           <v-col></v-col>
         </v-row>
@@ -186,6 +196,10 @@ export default{
         phone: "",
         organization: "",
         site: "",
+        userImageString: "https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg",
+        userImage: null,
+        orgImageString: "",
+        orgImage: null,
         pets:[]
       }
     }
@@ -194,14 +208,49 @@ export default{
     while(!this.$store.getters.getUserData){
        await this.sleep(500)
     }
+    const userData = this.$store.getters.getUserData
     console.log("data "+this.$store.getters.getUserData)
-    this.item.name = this.$store.getters.getUserData.name
-    this.item.phone = this.$store.getters.getUserData.phone
-    this.item.email = this.$store.getters.getUserData.email
-    this.item.organization = this.$store.getters.getUserData.organization
-    this.item.site = this.$store.getters.getUserData.site
+    this.item.name = userData.name
+    this.item.phone = userData.phone
+    this.item.email = userData.email
+    this.item.organization = userData.organization
+    this.item.site = userData.site
+    this.item.userImageString = userData.userImage ? userData.userImage : this.item.userImageString
+    this.item.orgImageString =  userData.orgImage ? userData.orgImage : null
   },
   methods:{
+    onUserFilePicked(event){
+      const files = event.target.files
+      let filename = files[0].name
+      if(filename.lastIndexOf('.')<=0){
+        return alert("Файл поврежден")
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', ()=>{
+        this.item.userImageString = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.item.userImage = files[0]
+    },
+    onOrgFilePicked(event){
+      const files = event.target.files
+      let filename = files[0].name
+      if(filename.lastIndexOf('.')<=0){
+        return alert("Файл поврежден")
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', ()=>{
+        this.item.orgImageString = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.item.orgImage = files[0]
+    },
+    pickUserImage(){
+      this.$refs.userFileInput.click()
+    },
+    pickOrgImage(){
+      this.$refs.orgFileInput.click()
+    },
     async sleep(ms){
       return new Promise(resolve => setTimeout(resolve, ms));
     },
@@ -216,8 +265,9 @@ export default{
         name: this.item.name,
         organization: this.item.organization,
         site: this.item.site,
-        phone: this.item.phone
-        // photo: this.item.
+        phone: this.item.phone,
+        userImage: this.item.userImageString,
+        orgImage: this.item.orgImageString
       })
       console.log("Data saved")
     }

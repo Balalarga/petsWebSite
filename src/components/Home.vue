@@ -21,7 +21,7 @@
                 align-self="center"
                 :to="{name: 'PostDetails',params: {id: pet.id}}"
                 >
-                <v-img v-bind:src="pet.picture"
+                <v-img v-bind:src="pet.photo"
                 class="rounded-circle mr-1 mb-2"
                 max-width="250"
                 max-height="250"
