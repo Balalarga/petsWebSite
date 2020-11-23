@@ -161,7 +161,6 @@
         })
         try{
           await this.$store.dispatch('register', this.form)
-          this.$router.push('/privateoffice')
         }catch(e){
           console.log(e)
           throw e;

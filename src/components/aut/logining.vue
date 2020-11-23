@@ -134,7 +134,6 @@
         console.log(this.form)
         try{
           await this.$store.dispatch('login', this.form)
-          this.$router.push('/privateoffice')
         } catch(e){
           console.log(e)
         }
