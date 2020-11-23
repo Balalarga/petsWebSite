@@ -5,7 +5,7 @@
       <v-radio label="Старые" value="radio-2"></v-radio>
     </v-radio-group>
 
-    <v-layout row wrap justify-space-between >
+    <v-layout row wrap justify-space-around >
       <v-col xs="4" sm="4" md="3" lg="3" v-for="pet in petsInfo" :key="pet.id" cols="3" >
         <v-row justify="center">
           <v-col  class="text-center">
@@ -21,7 +21,7 @@
                 align-self="center"
                 :to="{name: 'PostDetails',params: {id: pet.id}}"
                 >
-                <v-img v-bind:src="pet.picture"
+                <v-img v-bind:src="pet.photo"
                 class="rounded-circle mr-1 mb-2"
                 max-width="250"
                 max-height="250"
@@ -31,16 +31,7 @@
                 <v-scroll-y-transition>
                   <div v-if="active"></div>
                 </v-scroll-y-transition>
-                
-              </v-card>
-            </v-item>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col></v-col>
-          <v-col cols="6" class="text-center">
-            <v-card
+                <v-card 
 
                   max-width="137" 
                   align-self="center"
@@ -53,9 +44,30 @@
                 <!--<p>{{pet.age}}</p>-->
               </div>
             </v-card>
+              </v-card>
+            </v-item>
+          </v-col>
+        </v-row>
+
+ <!--<p>       <v-row>
+          <v-col></v-col>
+          <v-col cols="6" class="text-center">
+            <v-card
+
+                  max-width="137" 
+                  align-self="center"
+                  align-items: center
+                  class="square rounded-lg  mb-4"
+                  color="rgba(255, 255, 255, 0.8)"
+                  :to="{name: 'PostDetails',params: {id: pet.id}}">
+              <div class="text-center">
+                <span>{{pet.name}}</span>
+                {{pet.age}}
+              </div>
+            </v-card>
           </v-col>
           <v-col></v-col>
-        </v-row>
+        </v-row></p>-->
 
 
       </v-col>
@@ -91,16 +103,18 @@ export default {
     }
   },
   async mounted(){
+      console.log("Loading data")
       const pets = await firebase.database().ref('pets').orderByChild('date')
       let allPets = []
       pets.on("value",function(snapshot){
-        // console.log(snapshot)
         snapshot.forEach(function(child){
           let data = child.toJSON()
           data['id'] = child.key
-          console.log(data)
           allPets.push(data)
         })
+        console.log("Finished")
+      }, function(err){
+        console.log(err)
       })
       this.petsInfo = allPets
   }

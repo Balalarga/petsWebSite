@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+import 'firebase/firestore'
 
 Vue.config.productionTip = false
 
@@ -27,7 +28,8 @@ new Vue({
     })
     firebase.auth().onAuthStateChanged(user => {
       if(user)
-        this.$store.dispatch('loggedUser', user)
+        store.dispatch('fetchUser', user)
+        setTimeout(2000)
     })
   }
 }).$mount('#app')
