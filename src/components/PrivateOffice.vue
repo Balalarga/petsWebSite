@@ -257,7 +257,7 @@ export default{
     async logout(){
       console.log("Logout")
       await this.$store.dispatch('logout')
-      this.$router.push("home")
+      this.$router.push("/")
     },
     async saveUserData(){
       const uid = await this.$store.dispatch('getUid')
