@@ -110,7 +110,70 @@
             Загрузить/изменить логотип организации
           </v-col>
         </v-row>
+<v-col>
+        <v-row><v-col></v-col></v-row>
 
+        <v-row>
+          <v-col cols="2"></v-col>
+          <v-col cols="8">
+
+            <v-card 
+              class="mx-auto"
+              color="grey lighten-2">
+
+              <v-row class="text-center">
+                <v-col>
+                  <v-btn small rounded dark color="light-green"
+                  :to="{name: 'Announcement'}">
+                    Добавить объявление
+                    <v-icon small dark>
+                     mdi-plus-circle-outline
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+
+              <v-row class="text-center">
+                <v-col>
+                  <h2 class="profile-name">Ваши объявления</h2>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-container>
+                    <div id="grid">
+                        <div class="card" v-for="pet in this.pets" :key="pet.id">
+                            <a @click='clickPet(pet.id)'>
+                                <div class="img"
+                                    :to="{name: 'PostDetails',params: {id: pet.id}}"
+                                    >
+                                    <v-img v-bind:src="pet.photo"
+                                    class="rounded-circle mr-1 mb-2"
+                                    max-width="150"
+                                    max-height="150"
+                                    min-height="150"
+                                    min-width="150"
+                                    aspect-ratio="1.7"></v-img>
+                                    <v-scroll-y-transition>
+                                    <div v-if="active"></div>
+                                    </v-scroll-y-transition>
+                                </div>
+                                <div class="lable"
+                                    :to="{name: 'PostDetails',params: {id: pet.id}}">
+                                    <span>{{pet.name}}</span>
+                                    <!--<p>{{pet.age}}</p>-->
+                                
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </v-container>
+              </v-row>
+            </v-card>
+          </v-col>
+          <v-col></v-col>
+        </v-row>
+      </v-col>
         <v-row class="text-center">
           <v-col>
             <v-btn rounded dark color="light-green">
@@ -135,53 +198,7 @@
         </v-row>
       </v-col>
 
-      <v-col>
-        <v-row><v-col></v-col></v-row>
-
-        <v-row>
-          <v-col cols="2"></v-col>
-          <v-col cols="8">
-
-            <v-card 
-              class="mx-auto"
-              color="grey lighten-2">
-
-              <v-row class="text-center">
-                <v-col>
-                  <v-btn small rounded dark color="light-green">
-                    Добавить объявление
-                    <v-icon small dark>
-                     mdi-plus-circle-outline
-                    </v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-
-              <v-row class="text-center">
-                <v-col>
-                  <h2 class="profile-name">История объявлений</h2>
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col>
-                  <v-btn :to="{name: 'Announcement'}"
-                    dark
-                    x-large
-                    color="grey lighten-1"
-                    class="mx-4"
-                    fab>
-                    <v-icon x-large dark>
-                      mdi-plus
-                    </v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-          <v-col></v-col>
-        </v-row>
-      </v-col>
+      
 
   </v-container>
 </template>
@@ -192,7 +209,8 @@ export default{
   data(){
     return {
       item: {
-      }
+      },
+      pets:[]
     }
   },
   computed: {
@@ -205,12 +223,24 @@ export default{
   mounted(){
     console.log("Load data: ")
     console.log(this.getData)
-    this.item = this.getData
+    this.item.name = this.getData.name
+    this.item.organization = this.getData.organization
+    this.item.site = this.getData.site
+    this.item.phone = this.getData.phone
+    this.item.userImage = this.getData.userImage
+    this.item.orgImage = this.getData.orgImage
+    if(this.getData.pets)
+      this.pets = Object.values(this.getData.pets)
+    else
+      this.pets = []
   },
   created(){
     setTimeout(()=>{}, 2000)
   },
   methods:{
+    clickPet(event){
+      console.log("Pet "+event+" clicked")
+    },
     onUserFilePicked(event){
       const files = event.target.files
       let filename = files[0].name
@@ -266,5 +296,43 @@ export default{
 .profile-name{
   color: #22431F;
 }
+#grid { 
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2vw;
+  flex-flow: row wrap;
+  display: flex;
+  justify-content: center;
+  max-width: 1400px;
+  
+}
+.card {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.img {
+    max-width: 650px;
+    color:grey lighten-1;
+    max-height: 150px;
+    min-height: 150px;
+    min-width: 150px;
+    align-items: center;
+    align-self: center;    
+}
 
+.lable {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-top: 10px;
+    padding: 5px 0;
+    min-width: 50%; 
+    align-self: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    margin: 0, auto;
+    
+}
 </style>

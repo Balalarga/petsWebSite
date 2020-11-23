@@ -41,35 +41,12 @@
                   :to="{name: 'PostDetails',params: {id: pet.id}}">
               <div class="text-center">
                 <span>{{pet.name}}</span>
-                <!--<p>{{pet.age}}</p>-->
               </div>
             </v-card>
               </v-card>
             </v-item>
           </v-col>
         </v-row>
-
- <!--<p>       <v-row>
-          <v-col></v-col>
-          <v-col cols="6" class="text-center">
-            <v-card
-
-                  max-width="137" 
-                  align-self="center"
-                  align-items: center
-                  class="square rounded-lg  mb-4"
-                  color="rgba(255, 255, 255, 0.8)"
-                  :to="{name: 'PostDetails',params: {id: pet.id}}">
-              <div class="text-center">
-                <span>{{pet.name}}</span>
-                {{pet.age}}
-              </div>
-            </v-card>
-          </v-col>
-          <v-col></v-col>
-        </v-row></p>-->
-
-
       </v-col>
     </v-layout>
 

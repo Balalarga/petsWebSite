@@ -1,9 +1,5 @@
 <template>
  <v-container>
-    <div>
-        <p>About page</p>
-        
-    </div>
     <div id="grid">
         <div class="card" v-for="pet in petsInfo" :key="pet.id">
             <a href="#" >
@@ -29,11 +25,7 @@
                 </div>
             </a>
         </div>
-        
     </div>
-        
-  
-
  </v-container>
 </template>
 
@@ -58,12 +50,10 @@ export default {
           {name:'Толя', age:'2 месяца', picture:'https://25.img.avito.st/image/1/NOXOzLa_mAy4aWoKquBP_UdvngZwr5z-fG-aCnZpmgx6KQ', id:'7'},
           {name:'Айвазовский', age:'6 месяцев', picture:'https://avatars.mds.yandex.net/get-ynews/63844/e52c23a06aae22647943919887199b34/606x341', id:'8'},
           {name:'Stas', age:'100 days', picture:'', id:'9'}
-        
       ]
     }
   },
   methods: {
-      
   }
 }
 </script>
