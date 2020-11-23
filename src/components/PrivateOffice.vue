@@ -139,6 +139,28 @@
                 </v-col>
               </v-row>
 
+              <v-row><div id="grid">
+      <div class="card" v-for="pet in pets" :key="pet.id">
+        <a :href="'/PostDetails/'+pet.id" >
+          <div class="img">
+            <v-img v-bind:src="pet.photo"
+              class="rounded-circle mr-1 mb-2"
+              max-width="250"
+              max-height="250"
+              min-height="250"
+              min-width="250"
+              aspect-ratio="1.7">
+            </v-img>
+          </div>
+          <div class="lable">
+            <span>{{pet.name}}</span>
+            <!--<p>{{pet.age}}</p>-->
+          </div>
+        </a>
+      </div>
+    </div></v-row>
+
+
               <v-row>
                 <v-container>
                     <div id="grid">
@@ -210,7 +232,7 @@ export default{
     return {
       item: {
       },
-      pets:[]
+      pets:[{name:'Луня', age:'5 лет', photo:'https://img.amur.info/res/news/170368/643545e5f9646fd666d987525a7fc4f1.jpg', id:'1'}]
     }
   },
   computed: {
@@ -291,11 +313,9 @@ export default{
   }
 }
 </script>
-<style scoped>
 
-.profile-name{
-  color: #22431F;
-}
+
+<style scoped>
 #grid { 
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -303,8 +323,9 @@ export default{
   grid-gap: 2vw;
   flex-flow: row wrap;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   max-width: 1400px;
+  margin-left: 5%;
   
 }
 .card {
@@ -315,9 +336,9 @@ export default{
 .img {
     max-width: 650px;
     color:grey lighten-1;
-    max-height: 150px;
-    min-height: 150px;
-    min-width: 150px;
+    max-height: 250px;
+    min-height: 250px;
+    min-width: 250px;
     align-items: center;
     align-self: center;    
 }
@@ -333,6 +354,8 @@ export default{
     box-shadow: 0 3px 0 rgba(0,0,0,0.2);
     text-align: center;
     margin: 0, auto;
+    color: black;
     
 }
+
 </style>

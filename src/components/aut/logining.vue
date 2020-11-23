@@ -41,15 +41,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-row>
-                            <v-btn
-                            class="mb-3 ml-4"
-                                min-width="320" 
-                                @click="submit"
-                                
-                                rounded  color="transperent" 
-                            >
-                                Забыли пароль?
-                            </v-btn>
+                            
                             
                             <v-btn class="mb-3 ml-4"
                                 min-width="320" 

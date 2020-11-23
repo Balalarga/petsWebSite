@@ -5,51 +5,26 @@
       <v-radio label="Старые" value="radio-2"></v-radio>
     </v-radio-group>
 
-    <v-layout row wrap justify-space-around >
-      <v-col xs="4" sm="4" md="3" lg="3" v-for="pet in petsInfo" :key="pet.id" cols="3" >
-        <v-row justify="center">
-          <v-col  class="text-center">
-            <v-item v-slot="{ active }">
-              <v-card
-                color="grey lighten-1"
-                class="rounded-circle mb-2 ml-6"
-                max-width="250"
-                max-height="250"
-                min-height="250"
-                min-width="250"
-                align-items: center
-                align-self="center"
-                :to="{name: 'PostDetails',params: {id: pet.id}}"
-                >
-                <v-img v-bind:src="pet.photo"
-                class="rounded-circle mr-1 mb-2"
-                max-width="250"
-                max-height="250"
-                min-height="250"
-                min-width="250"
-                aspect-ratio="1.7"></v-img>
-                <v-scroll-y-transition>
-                  <div v-if="active"></div>
-                </v-scroll-y-transition>
-                <v-card 
-
-                  max-width="137" 
-                  align-self="center"
-                  align-items: center
-                  class="square rounded-lg  mb-4"
-                  color="rgba(255, 255, 255, 0.8)"
-                  :to="{name: 'PostDetails',params: {id: pet.id}}">
-              <div class="text-center">
-                <span>{{pet.name}}</span>
-              </div>
-            </v-card>
-              </v-card>
-            </v-item>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-layout>
-
+    <div id="grid">
+      <div class="card" v-for="pet in petsInfo" :key="pet.id">
+        <a :href="'/PostDetails/'+pet.id" >
+          <div class="img">
+            <v-img v-bind:src="pet.photo"
+              class="rounded-circle mr-1 mb-2"
+              max-width="250"
+              max-height="250"
+              min-height="250"
+              min-width="250"
+              aspect-ratio="1.7">
+            </v-img>
+          </div>
+          <div class="lable">
+            <span>{{pet.name}}</span>
+            <!--<p>{{pet.age}}</p>-->
+          </div>
+        </a>
+      </div>
+    </div>
   </v-item-group>
 </template>
 
@@ -97,3 +72,48 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#grid { 
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2vw;
+  flex-flow: row wrap;
+  display: flex;
+  justify-content: left;
+  max-width: 1400px;
+  margin-left: 5%;
+  
+}
+.card {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.img {
+    max-width: 650px;
+    color:grey lighten-1;
+    max-height: 250px;
+    min-height: 250px;
+    min-width: 250px;
+    align-items: center;
+    align-self: center;    
+}
+
+.lable {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-top: 10px;
+    padding: 5px 0;
+    min-width: 50%; 
+    align-self: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    margin: 0, auto;
+    color: black;
+    
+}
+
+</style>
