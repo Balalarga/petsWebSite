@@ -103,16 +103,20 @@ export default {
     }
   },
   async mounted(){
+      console.log("Loading data")
       const pets = await firebase.database().ref('pets').orderByChild('date')
       let allPets = []
       pets.on("value",function(snapshot){
-        // console.log(snapshot)
+        console.log("Data: " + snapshot)
         snapshot.forEach(function(child){
           let data = child.toJSON()
           data['id'] = child.key
           console.log(data)
           allPets.push(data)
         })
+        console.log("Finished")
+      }, function(err){
+        console.log(err)
       })
       this.petsInfo = allPets
   }

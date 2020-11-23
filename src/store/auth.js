@@ -1,77 +1,103 @@
 import firebase from 'firebase/app'
+import router from '@/router'
 
 export default{
     state:{
-      user: null,
-      userData: null
+      user: {
+        logged: false,
+        uid: null,
+        data: null
+      }
     },
     mutations:{
-      async setUser(state, user){
-        console.log(user);
-        if(user){
-          state.user = user
-          const userData = await firebase.database().ref("users/"+user.uid+'/data')
-          userData.on('value', function(data){
-            state.userData = data.val()
+      setUserUID(state, uid){
+        state.user.uid = uid
+      },
+      setLogged(state, value){
+        state.user.logged = value
+      },
+      setData(state, data){
+        state.user.data = data
+        console.log(data)
+        firebase.database().ref("users/"+state.user.uid+"/data").update(data)
+      },
+      async updateUser(state, uid){
+        if(state.user.logged){
+          firebase.database().ref("users/"+uid+"/data")
+          .on("value", (result)=>{
+            state.user.data = result.val()
           })
         }
       }
     },
     actions:{
+      fetchUser({commit}, user){
+        if(user){
+          commit('setLogged', true)
+          commit('setUserUID', user.uid)
+          setTimeout(2000)
+          commit("updateUser", user.uid)
+        }else{
+          commit('setLogged', false)
+          commit('setUserUID', null)
+          commit('setData', null)
+        }
+      },
+      async setUserData({commit}, data){
+        commit('setData', data)
+        setTimeout(() => {}, 1000)
+      },
       async login({dispatch, commit}, {email, pass}) {
+        dispatch
         try{
-          await firebase.auth().signInWithEmailAndPassword(email, pass);
-          const uid = await dispatch('getUid');
-          commit("setUser", uid)
+          const user = await firebase.auth().signInWithEmailAndPassword(email, pass);
+          commit("fetchUser", user)
+          setTimeout(()=>{}, 1000)
+          router.push('/')
         }catch (e){
           console.log(e);
         }
       },
-      async logout(state){
-        console.log("Logout " + state.user)
-        state.user = null
-        try{
-          await firebase.auth().signOut();
-        }catch (e){
-          console.log(e)
-        }
+     async logout({commit}){
+        await firebase.auth().signOut();
+        commit('fetchUser', null)
+        router.push('/')
       },
       async register({dispatch, commit}, {email, pass, name}) {
+        dispatch
         try{
-          await firebase.auth().createUserWithEmailAndPassword(email, pass);
-          const uid = await dispatch('getUid');
-          commit("setUser", uid)
-          await firebase.database().ref('users/'+uid+'/data').set({
-            name: name,
-            organization: "",
-            site: "",
-            phone: "",
-            photo: ""
-          })
-          console.log("User registered " + uid)
-          console.log("Current user " + this.user)
+          firebase.auth().createUserWithEmailAndPassword(email, pass).then(()=>{
+            const user = firebase.auth().currentUser
+            firebase.database().ref('users/'+user.uid+'/data').set({
+              name: name,
+              organization: "",
+              site: "",
+              phone: "",
+              userImage: "https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg",
+              orgImage: ""
+            })
+            router.push('/')
+          });
+          setTimeout(()=>{}, 2000)
+          commit('fetchUser', firebase.auth().currentUser)
         }catch (e){
           console.log(e);
         }
-      },
-      getUid(){
-        const user = firebase.auth().currentUser;
-        return user ? user.uid: null;
       },
       loggedUser({commit}, user){
         commit('setUser', user)
       },
       userAutorized(state){
         console.log("User state " + state.user)
-        return state.user;
+        return state.user?true:false;
       }
     },
-    getters:{
-      user(state){
-        return state.user
+    getters:{      
+      getUserUID(state){
+        return state.user.uid
       },
-      getUserData(state){
-        return state.userData
+      getData(state){
+        return state.user.data
       }
     }
 }

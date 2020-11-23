@@ -191,6 +191,7 @@ body{
 </style>
 
 <script>
+import firebase from 'firebase/app'
 export default {
   data (){
     return{
@@ -204,7 +205,7 @@ export default {
   },
   methods:{
     accountButton(){
-      if(this.$store.getters.user)
+      if(firebase.auth().currentUser)
         this.$router.replace({ name: "PrivateOffice" });
       else
         this.dialog = true

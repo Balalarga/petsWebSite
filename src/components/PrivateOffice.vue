@@ -12,7 +12,7 @@
             <v-avatar
               color="grey lighten-1"
               size="248">
-              <img :src="item.userImageString">
+              <img :src="item.userImage">
             </v-avatar>
           </v-col>
         </v-row>
@@ -187,36 +187,28 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
+import { mapGetters } from "vuex";
 export default{
   data(){
     return {
       item: {
-        name: "",
-        phone: "",
-        organization: "",
-        site: "",
-        userImageString: "https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg",
-        userImage: null,
-        orgImageString: "",
-        orgImage: null,
-        pets:[]
       }
     }
   },
-  mounted: async function () {
-    while(!this.$store.getters.getUserData){
-       await this.sleep(500)
-    }
-    const userData = this.$store.getters.getUserData
-    console.log("data "+this.$store.getters.getUserData)
-    this.item.name = userData.name
-    this.item.phone = userData.phone
-    this.item.email = userData.email
-    this.item.organization = userData.organization
-    this.item.site = userData.site
-    this.item.userImageString = userData.userImage ? userData.userImage : this.item.userImageString
-    this.item.orgImageString =  userData.orgImage ? userData.orgImage : null
+  computed: {
+  // map `this` to `this.$store.getters`
+    ...mapGetters({
+      getUserUID: "getUserUID",
+      getData: "getData"
+    })
+  },
+  mounted(){
+    console.log("Load data: ")
+    console.log(this.getData)
+    this.item = this.getData
+  },
+  created(){
+    setTimeout(()=>{}, 2000)
   },
   methods:{
     onUserFilePicked(event){
@@ -227,10 +219,9 @@ export default{
       }
       const fileReader = new FileReader()
       fileReader.addEventListener('load', ()=>{
-        this.item.userImageString = fileReader.result
+        this.item.userImage = fileReader.result
       })
       fileReader.readAsDataURL(files[0])
-      this.item.userImage = files[0]
     },
     onOrgFilePicked(event){
       const files = event.target.files
@@ -240,10 +231,9 @@ export default{
       }
       const fileReader = new FileReader()
       fileReader.addEventListener('load', ()=>{
-        this.item.orgImageString = fileReader.result
+        this.item.userImage = fileReader.result
       })
       fileReader.readAsDataURL(files[0])
-      this.item.orgImage = files[0]
     },
     pickUserImage(){
       this.$refs.userFileInput.click()
@@ -251,25 +241,22 @@ export default{
     pickOrgImage(){
       this.$refs.orgFileInput.click()
     },
-    async sleep(ms){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    },
     async logout(){
       console.log("Logout")
-      await this.$store.dispatch('logout')
-      this.$router.push("/")
+      this.$store.dispatch('logout')
+      setTimeout(()=>{}, 2000)
     },
     async saveUserData(){
-      const uid = await this.$store.dispatch('getUid')
-      await firebase.database().ref('users/'+uid+'/data').set({
+      this.$store.dispatch('setUserData', {
         name: this.item.name,
         organization: this.item.organization,
         site: this.item.site,
         phone: this.item.phone,
-        userImage: this.item.userImageString,
-        orgImage: this.item.orgImageString
+        userImage: this.item.userImage,
+        orgImage: this.item.orgImage
       })
       console.log("Data saved")
+      setTimeout(() => {}, 2000)
     }
   }
 }
