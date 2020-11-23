@@ -27,6 +27,12 @@ export default{
           .on("value", (result)=>{
             state.user.data = result.val()
           })
+          firebase.database().ref("pets").orderByChild("parent").equalTo(uid)
+          .on('value', (pets)=>{
+            state.user.data.pets = pets.val()
+            console.log("Pets: ")
+            console.log(state.user.data.pets)
+          })
         }
       }
     },
@@ -45,14 +51,14 @@ export default{
       },
       async setUserData({commit}, data){
         commit('setData', data)
-        setTimeout(() => {}, 1000)
+        setTimeout(() => {}, 2000)
       },
       async login({dispatch, commit}, {email, pass}) {
         dispatch
         try{
           const user = await firebase.auth().signInWithEmailAndPassword(email, pass);
           commit("fetchUser", user)
-          setTimeout(()=>{}, 1000)
+          setTimeout(()=>{}, 2000)
           router.push('/')
         }catch (e){
           console.log(e);

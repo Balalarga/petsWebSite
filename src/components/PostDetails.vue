@@ -34,9 +34,9 @@
         <v-row>
           <v-col>
             <v-card color="grey lighten-1">
-              <v-card-text>
+              <!--<v-card-text>
                 <tr>
-                  <!--<td style="width: 45%;" class="text-left">
+                  <td style="width: 45%;" class="text-left">
                     <tr><th>Пол животного:</th></tr>
                     <tr><th>Порода:</th></tr>
                     <tr><th>Возраст:</th></tr>
@@ -48,9 +48,9 @@
                     <tr>{{item.breed}}</tr>
                     <tr>{{item.age}}</tr>
                     <tr>{{item.weight}}</tr>
-                  </td>-->
+                  </td>
                 </tr>
-              </v-card-text>
+              </v-card-text>-->
               <v-card-text>
                 <tr>
                   <td>{{this.item.description}}</td>
