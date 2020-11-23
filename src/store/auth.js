@@ -74,7 +74,7 @@ export default{
               site: "",
               phone: "",
               userImage: "https://www.angulararchitects.io/wp-content/uploads/2019/06/wso-softwarearchitekt-placeholder-male.svg",
-              orgImage: ""
+              orgImage: "https://rayfund.ru/wp-content/uploads/2015/12/logo_facebook2.jpg"
             })
             router.push('/')
           });

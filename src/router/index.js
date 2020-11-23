@@ -8,6 +8,7 @@ import Registration from '@/components/aut/registration'
 import Logining from '@/components/aut/logining'
 import Announcement from '@/components/Announcement'
 import PostDetails from '@/components/PostDetails'
+import UpdatePet from '@/components/UpdatePet'
 
 Vue.use(VueRouter)
 
@@ -47,7 +48,13 @@ const routes = [
     path: '/postdetails/:id',
     name: 'PostDetails',
     component: PostDetails
-  }
+  },
+  {
+    path: '/updatepet/:id',
+    name: 'UpdatePet',
+    component: UpdatePet
+  },
+
 ]
 
 const router = new VueRouter({

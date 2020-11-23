@@ -4,10 +4,10 @@
       <v-col cols="10">
         <v-row>
           <v-col class="text-right">
-            <h1 class="profile-name">Добавление объявления</h1>
+            <h1 class="profile-name">Изменить объявление</h1>
           </v-col>
           <v-col class="text-center">
-            <v-btn :to="{name: 'PrivateOffice'}" color="grey lighten-2">Отменить</v-btn>
+            <v-btn @click='discard()' color="grey lighten-2">Отменить</v-btn>
           </v-col>
         </v-row>
       </v-col>
@@ -82,7 +82,7 @@
         <v-row>
           <v-col class="text-right">
             <v-btn @click="submit()" large dark color="light-green">
-              Опубликовать
+              Сохранить
             </v-btn>
           </v-col>
         </v-row>
@@ -104,6 +104,17 @@ export default{
       photo: "https://i.pinimg.com/474x/64/49/b1/6449b12a5936e6b68249c38e0cd16cb6.jpg",
       description: null
     }
+  },
+  mounted: async function () {
+    let curItem = null
+    const item = await firebase.database().ref('pets/'+this.$route.params.id)
+    item.on('value', function(snapshot){
+      curItem = snapshot.toJSON()
+    })
+    this.name = curItem.name
+    this.description = curItem.description
+    this.parent = curItem.parent
+    this.photo = curItem.photo
   },
   methods:{
     deletePhoto(){
@@ -130,31 +141,20 @@ export default{
           console.log("No data in fields")
           return;
         }
-        const uid = this.$store.getters.getUserUID
-        const userData = this.$store.getters.getData
-        const petsData = firebase.database().ref('/pets')
-        const newPet = petsData.push()
-        const currDate = new Date()
-        const dd = String(currDate.getDate()).padStart(2, '0');
-        const mm = String(currDate.getMonth() + 1).padStart(2, '0');
-        const yyyy = currDate.getFullYear();
-        await newPet.set({
+        const petsData = firebase.database().ref('/pets/'+this.$route.params.id)
+        await petsData.update({
             name: this.name,
             description: this.description,
-            parent: uid,
-            date: mm + '/' + dd + '/' + yyyy,
-            photo:this.photo,
-            home: userData.organization,
-            homeImage: userData.orgImage?userData.orgImage:"https://rayfund.ru/wp-content/uploads/2015/12/logo_facebook2.jpg",
-            phone: userData.phone,
-            userName: userData.name,
-            homeRef: userData.site
+            photo:this.photo
           })
         console.log("Data saved")
         this.$router.go(-1)
       }catch(e){
         console.log(e)  
       }
+    },
+    discard(){
+      this.$router.go(-1)
     }
   }
 }

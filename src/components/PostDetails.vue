@@ -19,7 +19,11 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn rounded dark color="light-green">
+            <v-btn
+            rounded dark
+            color="light-green"
+            v-if='owns()'
+            :to="{name: 'UpdatePet',params: {id: this.$route.params.id}}">
               Редактировать
             </v-btn>
           </v-col>
@@ -64,7 +68,9 @@
             <v-card color="grey lighten-1">
               <v-row>
                 <v-col>
-                  <h2 class="profile-name">Приют "Добрый друг"</h2>
+                  <a :href="item.homeRef">
+                    <h2 class="profile-name">{{item.home}}</h2>
+                  </a>
                 </v-col>
               </v-row>
 
@@ -73,68 +79,21 @@
                   <v-avatar
                     color="grey lighten-1"
                     size="140">
-                    <img src="https://rayfund.ru/wp-content/uploads/2015/12/logo_facebook2.jpg">
+                    <a :href="item.homeRef">
+                      <img :src="item.homeImage">
+                      </a>
                   </v-avatar>
-                </v-col>
-                <v-col class="text-left">
-                  <p>
-                    Основан в 2003 году<br>На данном портале 23 объявления
-                  </p>
                 </v-col>
               </v-row>
 
               <v-row>
                 <v-col>
-                  <v-btn color="grey lighten-3">
-                    <v-icon>mdi-cellphone-iphone</v-icon>
-                    Связаться с организацией
-                  </v-btn>
+                  <h3 class="profile-name" v-if='item.phone'>Телефон: {{item.phone}}({{item.userName}})</h3>
                 </v-col>
               </v-row>
             </v-card>
           </v-col>
           <v-col></v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col>
-        <h2>Смотрите также:</h2>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col class="text-center">
-        <v-row>
-          <v-col>
-            <v-avatar
-              color="grey lighten-1"
-              size="140">
-              <img src="https://img3.goodfon.com/original/1280x720/d/16/hameleon-golova-glaz-makro.jpg">
-            </v-avatar>
-          </v-col>
-          <v-col>
-            <v-avatar
-              color="grey lighten-1"
-              size="140">
-              <img src="https://i1.wallbox.ru/wallpapers/main/201549/b37576e8aa5ae6e.jpg">
-            </v-avatar>
-          </v-col>
-          <v-col>
-            <v-avatar
-              color="grey lighten-1"
-              size="140">
-              <img src="https://25.img.avito.st/image/1/NOXOzLa_mAy4aWoKquBP_UdvngZwr5z-fG-aCnZpmgx6KQ">
-            </v-avatar>
-          </v-col>
-          <v-col>
-            <v-avatar
-              color="grey lighten-1"
-              size="140">
-              <img src="https://avatars.mds.yandex.net/get-ynews/63844/e52c23a06aae22647943919887199b34/606x341">
-            </v-avatar>
-          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -148,13 +107,20 @@ export default{
     return{
       item: {
         name: "text",
-        photo: null
+        photo: null,
+        owns: false,
+        description: null,
+        home: null,
+        homeImage: null,
+        phone: null,
+        userName: null,
+        homeRef: null
       }
     }
   },
   mounted: async function () {
-    const item = await firebase.database().ref('pets/'+this.$route.params.id)
     let curItem = null
+    const item = await firebase.database().ref('pets/'+this.$route.params.id)
     item.on('value', function(snapshot){
       curItem = snapshot.toJSON()
     })
@@ -162,6 +128,16 @@ export default{
     this.item.description = curItem.description
     this.item.parent = curItem.parent
     this.item.photo = curItem.photo
+    this.item.home = curItem.home
+    this.item.homeImage = curItem.homeImage
+    this.item.phone = curItem.phone
+    this.item.userName = curItem.userName
+    this.item.homeRef = curItem.homeRef
+  },
+  methods:{
+    owns(){
+      return this.item.parent == this.$store.getters.getUserUID
+    }
   }
 }
 </script>
