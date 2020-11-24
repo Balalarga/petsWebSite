@@ -1,13 +1,29 @@
 <template>
-  <v-item-group class="text-center">
+<div>
+  <v-row
+    v-if="!petsInfo.length"
+    >
+    <v-col
+      align="center">
+      <v-progress-circular
+      indeterminate
+      :size="600"
+      color="green"
+      >
+      </v-progress-circular>
+    </v-col>
+  </v-row>
+  <v-item-group class="text-center"
+  v-if='petsInfo.length'
+  >
     <v-radio-group v-model="ratioButton" row mandatory @change="onRatioClicked">  
       <v-radio label="Новые" value="new"></v-radio>
       <v-radio label="Старые" value="old"></v-radio>
     </v-radio-group>
-
+    
     <div id="grid">
       <div class="card" v-for="pet in petsInfo" :key="pet.id">
-        <a :href="'/PostDetails/'+pet.id">
+        <a :href="'/PostDetails/'+pet.id" class='ma-9'>
           <div class="img">
             <v-img v-bind:src="pet.photo"
               class="rounded-circle mr-1 mb-2"
@@ -25,6 +41,7 @@
       </div>
     </div>
   </v-item-group>
+</div>
 </template>
 
 <script>
@@ -58,14 +75,16 @@ export default {
       id
       if(this.ratioButton == 'old' && this.oldAtEnd===true){
         for(let i = 0; i < this.petsInfo.length/2; i++){
-          [this.petsInfo[i], this.petsInfo[this.petsInfo.length-i]]=
-          [this.petsInfo[this.petsInfo.length-i], this.petsInfo[i]] 
+          const temp = this.petsInfo[i]
+          this.petsInfo[i] = this.petsInfo[this.petsInfo.length-i]
+          this.petsInfo[this.petsInfo.length-i] = temp
         }
         this.oldAtEnd = false;
       }else if(this.ratioButton == 'new' && this.oldAtEnd===false){
         for(let i = 0; i < this.petsInfo.length/2; i++){
-          [this.petsInfo[i], this.petsInfo[this.petsInfo.length-i]]=
-          [this.petsInfo[this.petsInfo.length-i], this.petsInfo[i]] 
+          const temp = this.petsInfo[i]
+          this.petsInfo[i] = this.petsInfo[this.petsInfo.length-i]
+          this.petsInfo[this.petsInfo.length-i] = temp
         }
         this.oldAtEnd = true;
       }
@@ -77,15 +96,17 @@ export default {
 <style scoped>
 #grid { 
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 2vw;
   flex-flow: row wrap;
   display: flex;
   justify-content: left;
-  max-width: 1400px;
-  margin-left: 5%;
+  /* max-width: 1400px; */
+  margin-left: 2%;
   
+}
+.main{
+  display: flex;
+  justify-self: left;
 }
 .card {
     align-items: center;

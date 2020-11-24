@@ -1,5 +1,21 @@
 <template>
-  <v-container fluid>
+<div>
+  
+  <v-row
+    v-if="!item.photo"
+    >
+    <v-col
+      align="center">
+      <v-progress-circular
+      indeterminate
+      :size="600"
+      color="green"
+      >
+      </v-progress-circular>
+    </v-col>
+  </v-row>
+  <v-container fluid
+    v-if="item.photo">
     <v-row>
       <v-col class="text-center">
         <h1 class="profile-name">{{item.name}}<!--, {{animal.age}} (г. {{animal.city}})--></h1>
@@ -102,6 +118,7 @@
       </v-col>
     </v-row>
   </v-container>
+</div>
 </template>
 
 <script>

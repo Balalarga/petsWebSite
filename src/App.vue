@@ -85,10 +85,10 @@
 				<span id="f_inf2">Москва 2020</span><br>
 			</div>
 			<div class="f_col_2 f_cols">
-				<a href=# class="w_text_f f_col_2_pad">Главная</a>
-				<a href=# class="w_text_f f_col_2_pad">Личный кабинет</a>
-				<a href=# class="w_text_f f_col_2_pad">Интересное</a>
-				<a href=# class="w_text_f f_col_2_pad">О нас</a>
+				<a href='/' class="w_text_f f_col_2_pad">Главная</a>
+				<a @click="accountButton" class="w_text_f f_col_2_pad">Личный кабинет</a>
+				<!-- <a href="" class="w_text_f f_col_2_pad">Интересное</a> -->
+				<a @click="$router.push('AboutUs')" class="w_text_f f_col_2_pad">О нас</a>
 			</div>
 			<div class="f_col_345 f_cols">
 				<span class="w_text_f">Наши сервисы:</span>
@@ -205,7 +205,7 @@ export default {
       dialog: false,
       menuItems: [
         {title:'Объявления', link:'/'},
-        {title:'Интересное', link:'/Info'},
+        //{title:'Интересное', link:'/Info'},
         {title:'О нас', link:'/AboutUs'}
       ]
     }
@@ -228,7 +228,6 @@ export default {
 	font-family: Roboto, normal;
 	word-wrap:break-word;
 	text-decoration: none;
-	bborder: 1px solid;
 }
 .f_logo{
 	width:200px;

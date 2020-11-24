@@ -90,8 +90,9 @@
         </v-row>
 
         <v-row>
-          <v-col class="text-center">
+            <v-col align='center'>
             <v-btn 
+
               @click='pickOrgImage'
               x-large 
               color="grey lighten-2"
@@ -105,10 +106,9 @@
             ref='orgFileInput'
             accept='image/*'
             @change="onOrgFilePicked">
-          </v-col>
-          <v-col left>
             Загрузить/изменить логотип организации
-          </v-col>
+            
+            </v-col>
         </v-row>
 <v-col>
         <v-row><v-col></v-col></v-row>
