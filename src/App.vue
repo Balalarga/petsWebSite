@@ -1,8 +1,15 @@
 <template>
-  <v-app>
-  <v-img src="https://i.imgur.com/OmNuleU.jpg">
-    <v-app-bar color="rgba(255,255,255, 0.6)" flat  app>
-      <v-toolbar-title>YOUR friends</v-toolbar-title>
+	<v-app>
+	<v-img src="https://i.imgur.com/OmNuleU.jpg">
+	<v-app-bar color="rgba(255,255,255, 0.6)" flat  app>
+		<v-toolbar-items>
+			<a href="/">
+				<v-img src="./assets/logo_no_bg.png"
+				max-width="200"
+				class='mt-4'>
+				</v-img>
+			</a>
+		</v-toolbar-items>
       <v-spacer></v-spacer>
       <v-toolbar-items >
         <v-btn 

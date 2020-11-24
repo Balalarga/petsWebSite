@@ -194,6 +194,7 @@
 </template>
 
 <script>
+import firebase from "firebase/app"
 import { mapGetters } from "vuex";
 export default{
   data(){
@@ -210,7 +211,7 @@ export default{
       getData: "getData"
     })
   },
-  mounted(){
+  created(){
     console.log("Load data: ")
     console.log(this.getData)
     this.item.name = this.getData.name
@@ -230,9 +231,11 @@ export default{
     else{
       console.log("No pets founded")
     }
-  },
-  created(){
-    setTimeout(()=>{}, 2000)
+    const self = this
+    firebase.database().ref("users/"+this.getUserUID+"/data")
+    .on("value", (result)=>{
+      self.item = result.val()
+    })
   },
   methods:{
     onUserFilePicked(event){
@@ -244,6 +247,7 @@ export default{
       const fileReader = new FileReader()
       fileReader.addEventListener('load', ()=>{
         this.item.userImage = fileReader.result
+        this.saveUserData()
       })
       fileReader.readAsDataURL(files[0])
     },
@@ -255,7 +259,8 @@ export default{
       }
       const fileReader = new FileReader()
       fileReader.addEventListener('load', ()=>{
-        this.item.userImage = fileReader.result
+        this.item.orgImage = fileReader.result
+        this.saveUserData()
       })
       fileReader.readAsDataURL(files[0])
     },
@@ -278,6 +283,8 @@ export default{
         phone: this.item.phone,
         userImage: this.item.userImage,
         orgImage: this.item.orgImage
+      }).then(()=>{
+        alert("Изменения сохранены")
       })
       console.log("Data saved")
       setTimeout(() => {}, 2000)

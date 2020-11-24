@@ -13,7 +13,9 @@
             <v-avatar
               color="grey lighten-1"
               size="200">
-              <img v-bind:src="item.photo">
+              <v-img v-bind:src="item.photo"
+              aspect-ratio="1.7">
+              </v-img>
             </v-avatar>
           </v-col>
         </v-row>
@@ -80,7 +82,9 @@
                     color="grey lighten-1"
                     size="140">
                     <a :href="item.homeRef">
-                      <img :src="item.homeImage">
+                      <v-img 
+                      :src="item.homeImage">
+                      </v-img>
                       </a>
                   </v-avatar>
                 </v-col>
