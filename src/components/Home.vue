@@ -24,15 +24,9 @@
     <div id="grid">
       <div class="card" v-for="pet in petsInfo" :key="pet.id">
         <a :href="'/PostDetails/'+pet.id" class='ma-9'>
-          <div class="img">
-            <v-img v-bind:src="pet.photo"
-              class="rounded-circle mr-1 mb-2"
-              max-width="250"
-              max-height="250"
-              min-height="250"
-              min-width="250"
-              aspect-ratio="1.7">
-            </v-img>
+          <div>
+            <img class="img" 
+              :src="pet.photo" alt="">
           </div>
           <div class="lable">
             <span>{{pet.name}}</span>
@@ -102,15 +96,20 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .img {
-    max-width: 650px;
+    object-fit: cover;
+    max-width: 250px;
     color:grey lighten-1;
     max-height: 250px;
     min-height: 250px;
     min-width: 250px;
     align-items: center;
-    align-self: center;    
+    align-self: center;   
+    filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
+    border-radius: 50%;    
 }
+
 
 .lable {
     background-color: rgba(255, 255, 255, 0.8);

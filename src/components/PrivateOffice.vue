@@ -142,16 +142,10 @@
               <v-row><div id="grid">
                 <div class="card" v-for="pet in pets" :key="pet">
                   <a :href="'/PostDetails/'+pet.id" >
-                    <div class="img">
-                      <v-img v-bind:src="pet.photo"
-                        class="rounded-circle mr-1 mb-2"
-                        max-width="150"
-                        max-height="150"
-                        min-height="150"
-                        min-width="150"
-                        aspect-ratio="1.7">
-                      </v-img>
-                    </div>
+                    <div>
+                      <img class="img" 
+                        :src="pet.photo" alt="">
+                      </div>
                     <div class="lable">
                       <span>{{pet.name}}</span>
                     </div>
@@ -313,13 +307,16 @@ export default{
     flex-direction: column;
 }
 .img {
-    max-width: 650px;
+    object-fit: cover;
+    max-width: 150px;
     color:grey lighten-1;
     max-height: 150px;
     min-height: 150px;
     min-width: 150px;
     align-items: center;
-    align-self: center;    
+    align-self: center;   
+    filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
+    border-radius: 50%;    
 }
 
 .lable {
@@ -334,6 +331,7 @@ export default{
     text-align: center;
     margin: 0, auto;
     color: black;
+    margin-bottom: 10px;
     
 }
 

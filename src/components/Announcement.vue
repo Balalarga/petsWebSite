@@ -18,11 +18,7 @@
       <v-col>
         <v-row>
           <v-col align="center">
-            <v-avatar
-              color="grey lighten-1"
-              size="300">
-              <img :src="photo">
-            </v-avatar>
+            <img :src="photo" class="img">
           </v-col>
         </v-row>
 
@@ -160,7 +156,18 @@ export default{
 }
 </script>
 <style scoped>
-
+.img {
+  object-fit: cover;
+  max-width: 300px;
+  color:grey lighten-1;
+  max-height: 300px;
+  min-height: 300px;
+  min-width: 300px;
+  align-items: center;
+  align-self: center;   
+  filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
+  border-radius: 50%; 
+}
 .profile-name{
   color: #22431F;
 }
