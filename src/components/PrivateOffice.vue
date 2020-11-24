@@ -140,7 +140,7 @@
               </v-row>
 
               <v-row><div id="grid">
-                <div class="card" v-for="pet in pets" :key="pet.id">
+                <div class="card" v-for="pet in pets" :key="pet">
                   <a :href="'/PostDetails/'+pet.id" >
                     <div class="img">
                       <v-img v-bind:src="pet.photo"
@@ -154,7 +154,6 @@
                     </div>
                     <div class="lable">
                       <span>{{pet.name}}</span>
-                      <!--<p>{{pet.age}}</p>-->
                     </div>
                   </a>
                 </div>
@@ -220,20 +219,22 @@ export default{
     this.item.phone = this.getData.phone
     this.item.userImage = this.getData.userImage
     this.item.orgImage = this.getData.orgImage
-    if(this.getPets)
-      this.pets = Object.values(this.getPets)
+    if(this.getPets){
+      console.log(this.getPets)
+     for (const [key, value] of Object.entries(this.getPets)){
+        value.id = key
+        this.pets.push(value)
+      }
+      console.log(this.pets)
+    }
     else{
       console.log("No pets founded")
-      this.pets = []
     }
   },
   created(){
     setTimeout(()=>{}, 2000)
   },
   methods:{
-    clickPet(event){
-      console.log("Pet "+event+" clicked")
-    },
     onUserFilePicked(event){
       const files = event.target.files
       let filename = files[0].name

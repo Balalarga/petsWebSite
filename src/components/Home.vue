@@ -7,7 +7,7 @@
 
     <div id="grid">
       <div class="card" v-for="pet in petsInfo" :key="pet.id">
-        <a :href="'/PostDetails/'+pet.id" >
+        <a :href="'/PostDetails/'+pet.id">
           <div class="img">
             <v-img v-bind:src="pet.photo"
               class="rounded-circle mr-1 mb-2"
@@ -20,7 +20,6 @@
           </div>
           <div class="lable">
             <span>{{pet.name}}</span>
-            <!--<p>{{pet.age}}</p>-->
           </div>
         </a>
       </div>
@@ -34,41 +33,25 @@ export default {
 
   data (){
     return{
-      items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' },
-      ],
-      petsInfo: [
-          {name:'Луня', age:'5 лет', picture:'https://img.amur.info/res/news/170368/643545e5f9646fd666d987525a7fc4f1.jpg', id:'1'},
-          {name:'Фрося', age:'3 года', picture:'https://sun9-31.userapi.com/CtUgXkfGovRO1aMZ1Q7G7THSxBUaJ3-LRuUx7A/W55Un74paRA.jpg', id:'2'},
-          {name:'Федя', age:'1 год', picture:'https://sun9-48.userapi.com/c11310/u146061009/-1/x_94a6d297.jpg', id:'3'},
-          {name:'Честер', age:'7 месяцев', picture:'https://i1.wallbox.ru/wallpapers/main/201549/b37576e8aa5ae6e.jpg', id:'4'},
-          {name:'Желток', age:'3 недели', picture:'https://i.pinimg.com/originals/81/08/f5/8108f5a573c4225f5aa1656ffa11dd31.jpg', id:'5'},
-          {name:'Костик', age:'9 лет', picture:'https://img3.goodfon.com/original/1280x720/d/16/hameleon-golova-glaz-makro.jpg', id:'6'},
-          {name:'Толя', age:'2 месяца', picture:'https://25.img.avito.st/image/1/NOXOzLa_mAy4aWoKquBP_UdvngZwr5z-fG-aCnZpmgx6KQ', id:'7'},
-          {name:'Айвазовский', age:'6 месяцев', picture:'https://avatars.mds.yandex.net/get-ynews/63844/e52c23a06aae22647943919887199b34/606x341', id:'8'},
-          {name:'Stas', age:'100 days', picture:'', id:'9'}
-        
-      ]
+      petsInfo: []
     }
   },
   async mounted(){
       console.log("Loading data")
       const pets = await firebase.database().ref('pets').orderByChild('date')
-      let allPets = []
+      // let allPets = []
+      const self = this
       pets.on("value",function(snapshot){
         snapshot.forEach(function(child){
           let data = child.toJSON()
           data['id'] = child.key
-          allPets.push(data)
+          self.petsInfo.push(data)
         })
         console.log("Finished")
       }, function(err){
         console.log(err)
       })
-      this.petsInfo = allPets
+      // this.petsInfo = allPets
   }
 };
 </script>

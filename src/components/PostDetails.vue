@@ -53,7 +53,7 @@
               </v-card-text>-->
               <v-card-text>
                 <tr>
-                  <td>{{this.item.description}}</td>
+                  <td>{{item.description}}</td>
                 </tr>
               </v-card-text>
             </v-card>
@@ -107,32 +107,34 @@ export default{
     return{
       item: {
         name: "text",
-        photo: null,
+        photo: "",
         owns: false,
-        description: null,
-        home: null,
-        homeImage: null,
-        phone: null,
-        userName: null,
-        homeRef: null
+        description: "",
+        home: "",
+        homeImage: "",
+        phone: "",
+        userName: "",
+        homeRef: ""
       }
     }
   },
   mounted: async function () {
     let curItem = null
-    const item = await firebase.database().ref('pets/'+this.$route.params.id)
-    item.on('value', function(snapshot){
+    const self = this
+    firebase.database().ref('pets/'+this.$route.params.id).on('value', function(snapshot){
       curItem = snapshot.toJSON()
+      console.log("Mounting PostDetails")
+      console.log(curItem)
+      self.item.name = curItem.name
+      self.item.description = curItem.description
+      self.item.parent = curItem.parent
+      self.item.photo = curItem.photo
+      self.item.home = curItem.home
+      self.item.homeImage = curItem.homeImage
+      self.item.phone = curItem.phone
+      self.item.userName = curItem.userName
+      self.item.homeRef = curItem.homeRef
     })
-    this.item.name = curItem.name
-    this.item.description = curItem.description
-    this.item.parent = curItem.parent
-    this.item.photo = curItem.photo
-    this.item.home = curItem.home
-    this.item.homeImage = curItem.homeImage
-    this.item.phone = curItem.phone
-    this.item.userName = curItem.userName
-    this.item.homeRef = curItem.homeRef
   },
   methods:{
     owns(){
