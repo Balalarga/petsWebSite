@@ -7,7 +7,7 @@
                         <h2 class="profile-name">Хотите дать объявление и найти дом для животного?</h2>
                     </v-col>
                 </v-row>
-                <v-row justify="left">
+                <v-row>
                     <v-form ref="form" color="transparent" elevation="0" min-width="350" v-model="isFormValid">
                         <v-card-text>
                             <v-text-field

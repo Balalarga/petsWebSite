@@ -7,7 +7,7 @@
                         <h2 class="profile-name">Вход в личный кабинет</h2>
                     </v-col>
                 </v-row>
-                <v-row justify="left">
+                <v-row>
                     <v-form v-model="enabled" ref="form" color="transparent" elevation="0" min-width="350">
                         <v-card-text>
                             
@@ -123,12 +123,15 @@
 
           //this.$refs[f].validate(true)
         })
+        const self = this
         console.log(this.form)
-        try{
-          await this.$store.dispatch('login', this.form)
-        } catch(e){
-          console.log(e)
-        }
+        this.$store.dispatch('login', this.form).catch((e)=>{
+          self.resetForm()
+          if(e.code === "auth/invalid-email")
+            alert("Почта не существует")
+          else
+            alert("Неверный пароль")
+        })
       },
     },
   }

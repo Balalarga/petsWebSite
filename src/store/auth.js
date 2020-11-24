@@ -61,14 +61,13 @@ export default{
       async login({dispatch, commit}, {email, pass}) {
         console.log("fetchUser")
         dispatch
-        try{
-          const user = await firebase.auth().signInWithEmailAndPassword(email, pass);
+          const user = await firebase.auth().signInWithEmailAndPassword(email, pass)
+            .catch((e)=>{
+              throw e
+          });
           commit("fetchUser", user)
           setTimeout(()=>{}, 2000)
           router.push('/')
-        }catch (e){
-          console.log(e);
-        }
       },
      async logout({commit}){
       console.log("logout")
