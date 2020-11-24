@@ -201,11 +201,10 @@ export default{
     return {
       item: {
       },
-      pets:[{name:'Луня', age:'5 лет', photo:'https://img.amur.info/res/news/170368/643545e5f9646fd666d987525a7fc4f1.jpg', id:'1'}]
+      pets:[]
     }
   },
   computed: {
-  // map `this` to `this.$store.getters`
     ...mapGetters({
       getUserUID: "getUserUID",
       getPets: "getPets",
