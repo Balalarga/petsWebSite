@@ -6,22 +6,26 @@ export default{
       user: {
         logged: false,
         uid: null,
-        data: null
+        data: null,
+        pets: []
       }
     },
     mutations:{
       setUserUID(state, uid){
+        console.log("setUserUID")
         state.user.uid = uid
       },
       setLogged(state, value){
+        console.log("setLogged")
         state.user.logged = value
       },
       setData(state, data){
+        console.log("setData")
         state.user.data = data
-        console.log(data)
         firebase.database().ref("users/"+state.user.uid+"/data").update(data)
       },
       async updateUser(state, uid){
+        console.log("updateUser")
         if(state.user.logged){
           firebase.database().ref("users/"+uid+"/data")
           .on("value", (result)=>{
@@ -29,15 +33,16 @@ export default{
           })
           firebase.database().ref("pets").orderByChild("parent").equalTo(uid)
           .on('value', (pets)=>{
-            state.user.data.pets = pets.val()
+            state.user.pets = pets.val()
             console.log("Pets: ")
-            console.log(state.user.data.pets)
+            console.log(state.user.pets)
           })
         }
       }
     },
     actions:{
       fetchUser({commit}, user){
+        console.log("fetchUser")
         if(user){
           commit('setLogged', true)
           commit('setUserUID', user.uid)
@@ -49,11 +54,12 @@ export default{
           commit('setData', null)
         }
       },
-      async setUserData({commit}, data){
+      setUserData({commit}, data){
+        console.log("setUserData")
         commit('setData', data)
-        setTimeout(() => {}, 2000)
       },
       async login({dispatch, commit}, {email, pass}) {
+        console.log("fetchUser")
         dispatch
         try{
           const user = await firebase.auth().signInWithEmailAndPassword(email, pass);
@@ -65,6 +71,7 @@ export default{
         }
       },
      async logout({commit}){
+      console.log("logout")
         await firebase.auth().signOut();
         commit('fetchUser', null)
         router.push('/')
@@ -91,19 +98,29 @@ export default{
         }
       },
       loggedUser({commit}, user){
+        console.log("console")
         commit('setUser', user)
       },
       userAutorized(state){
+        console.log("userAutorized")
         console.log("User state " + state.user)
         return state.user?true:false;
       }
     },
     getters:{      
       getUserUID(state){
+        console.log("getUserUID")
         return state.user.uid
       },
       getData(state){
+        console.log("getData")
+        console.log(state.user.data)
         return state.user.data
+      },
+      getPets(state){
+        console.log("getData")
+        console.log(state.user.pets)
+        return state.user.pets
       }
     }
 }

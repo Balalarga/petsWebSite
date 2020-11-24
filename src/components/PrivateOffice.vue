@@ -140,57 +140,26 @@
               </v-row>
 
               <v-row><div id="grid">
-      <div class="card" v-for="pet in pets" :key="pet.id">
-        <a :href="'/PostDetails/'+pet.id" >
-          <div class="img">
-            <v-img v-bind:src="pet.photo"
-              class="rounded-circle mr-1 mb-2"
-              max-width="250"
-              max-height="250"
-              min-height="250"
-              min-width="250"
-              aspect-ratio="1.7">
-            </v-img>
-          </div>
-          <div class="lable">
-            <span>{{pet.name}}</span>
-            <!--<p>{{pet.age}}</p>-->
-          </div>
-        </a>
-      </div>
-    </div></v-row>
-
-
-              <v-row>
-                <v-container>
-                    <div id="grid">
-                        <div class="card" v-for="pet in this.pets" :key="pet.id">
-                            <a @click='clickPet(pet.id)'>
-                                <div class="img"
-                                    :to="{name: 'PostDetails',params: {id: pet.id}}"
-                                    >
-                                    <v-img v-bind:src="pet.photo"
-                                    class="rounded-circle mr-1 mb-2"
-                                    max-width="150"
-                                    max-height="150"
-                                    min-height="150"
-                                    min-width="150"
-                                    aspect-ratio="1.7"></v-img>
-                                    <v-scroll-y-transition>
-                                    <div v-if="active"></div>
-                                    </v-scroll-y-transition>
-                                </div>
-                                <div class="lable"
-                                    :to="{name: 'PostDetails',params: {id: pet.id}}">
-                                    <span>{{pet.name}}</span>
-                                    <!--<p>{{pet.age}}</p>-->
-                                
-                                </div>
-                            </a>
-                        </div>
+                <div class="card" v-for="pet in pets" :key="pet.id">
+                  <a :href="'/PostDetails/'+pet.id" >
+                    <div class="img">
+                      <v-img v-bind:src="pet.photo"
+                        class="rounded-circle mr-1 mb-2"
+                        max-width="150"
+                        max-height="150"
+                        min-height="150"
+                        min-width="150"
+                        aspect-ratio="1.7">
+                      </v-img>
                     </div>
-                </v-container>
-              </v-row>
+                    <div class="lable">
+                      <span>{{pet.name}}</span>
+                      <!--<p>{{pet.age}}</p>-->
+                    </div>
+                  </a>
+                </div>
+              </div></v-row>
+
             </v-card>
           </v-col>
           <v-col></v-col>
@@ -239,6 +208,7 @@ export default{
   // map `this` to `this.$store.getters`
     ...mapGetters({
       getUserUID: "getUserUID",
+      getPets: "getPets",
       getData: "getData"
     })
   },
@@ -251,10 +221,12 @@ export default{
     this.item.phone = this.getData.phone
     this.item.userImage = this.getData.userImage
     this.item.orgImage = this.getData.orgImage
-    if(this.getData.pets)
-      this.pets = Object.values(this.getData.pets)
-    else
+    if(this.getPets)
+      this.pets = Object.values(this.getPets)
+    else{
+      console.log("No pets founded")
       this.pets = []
+    }
   },
   created(){
     setTimeout(()=>{}, 2000)
@@ -336,9 +308,9 @@ export default{
 .img {
     max-width: 650px;
     color:grey lighten-1;
-    max-height: 250px;
-    min-height: 250px;
-    min-width: 250px;
+    max-height: 150px;
+    min-height: 150px;
+    min-width: 150px;
     align-items: center;
     align-self: center;    
 }
