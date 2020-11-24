@@ -17,8 +17,8 @@
   v-if='petsInfo.length'
   >
     <v-radio-group v-model="ratioButton" row mandatory @change="onRatioClicked">  
-      <v-radio label="Новые" value="new"></v-radio>
       <v-radio label="Старые" value="old"></v-radio>
+      <v-radio label="Новые" value="new"></v-radio>
     </v-radio-group>
     
     <div id="grid">
@@ -56,36 +56,25 @@ export default {
     }
   },
   async mounted(){
-      console.log("Loading data")
       const pets = await firebase.database().ref('pets').orderByChild('date')
       const self = this
       pets.on("value",function(snapshot){
         snapshot.forEach(function(child){
           let data = child.toJSON()
           data['id'] = child.key
-          self.petsInfo.push(data)
+          self.petsInfo.unshift(data)
         })
-        console.log("Finished")
       }, function(err){
         console.log(err)
       })
   },
   methods:{
-    onRatioClicked(id){
-      id
-      if(this.ratioButton == 'old' && this.oldAtEnd===true){
-        for(let i = 0; i < this.petsInfo.length/2; i++){
-          const temp = this.petsInfo[i]
-          this.petsInfo[i] = this.petsInfo[this.petsInfo.length-i]
-          this.petsInfo[this.petsInfo.length-i] = temp
-        }
+    onRatioClicked(){
+      if(this.ratioButton === 'old' && this.oldAtEnd==true){
+        this.petsInfo.reverse()
         this.oldAtEnd = false;
-      }else if(this.ratioButton == 'new' && this.oldAtEnd===false){
-        for(let i = 0; i < this.petsInfo.length/2; i++){
-          const temp = this.petsInfo[i]
-          this.petsInfo[i] = this.petsInfo[this.petsInfo.length-i]
-          this.petsInfo[this.petsInfo.length-i] = temp
-        }
+      }else if(this.ratioButton === 'new' && this.oldAtEnd==false){
+        this.petsInfo.reverse()
         this.oldAtEnd = true;
       }
     }
