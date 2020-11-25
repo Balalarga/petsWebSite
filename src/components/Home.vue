@@ -106,8 +106,10 @@ export default {
     min-width: 250px;
     align-items: center;
     align-self: center;   
-    filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
     border-radius: 50%;    
+}
+.img:hover {
+  border : rgb(30,100,40) solid 5px;
 }
 
 
@@ -119,7 +121,7 @@ export default {
     align-self: center;
     align-items: center;
     border-radius: 15px;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
     text-align: center;
     margin: 0, auto;
     color: black;

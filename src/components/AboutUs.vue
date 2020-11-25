@@ -20,8 +20,7 @@
 
 <style scoped>
 p {
-  margin: 0;
-  text-indent: 3ch;
+  margin: 3px;
   margin-bottom: 1em;
 }
 #mainText{
