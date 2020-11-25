@@ -20,9 +20,22 @@ export default{
         state.user.logged = value
       },
       setData(state, data){
-        console.log("setData")
+        console.log(state.user.pets)
         state.user.data = data
         firebase.database().ref("users/"+state.user.uid+"/data").update(data)
+        if(state.user.pets)        
+          for (const [key, value] of Object.entries(state.user.pets)){
+            console.log("Pet "+ key)
+            console.log(value)
+            console.log("User ")
+            console.log(state.user.data)
+            value.home = state.user.data.organization
+            value.homeImage = state.user.data.orgImage
+            value.homeRef = state.user.data.site
+            value.phone = state.user.data.phone
+            value.userName = state.user.data.name
+            firebase.database().ref("pets/"+key).update(value)
+          }
       },
       async updateUser(state, uid){
         console.log("updateUser")
