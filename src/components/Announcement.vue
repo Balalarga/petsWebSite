@@ -104,11 +104,17 @@
         <v-btn 
           large dark color=#22431F rounded
             @click='pickImage'>
-            Добавить фото</v-btn></div>
+            Добавить фото</v-btn>
+            <input type='file'
+            style='display: none'
+            ref='fileInput'
+            accept='image/*'
+            @change="onPickImage"></div>
         <div><v-btn large dark color="grey lighten-1" rounded
           @click='deletePhoto'>
             Удалить фото
-          </v-btn></div>
+          </v-btn>
+          </div>
       </div>
     </div>
     <div class=col2>
