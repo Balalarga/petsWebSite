@@ -139,6 +139,7 @@
 body{
   background-image: url('./img/back.jpg');
   background-size: cover;
+  overflow: auto;
 }
 
 .f_logo{
