@@ -10,8 +10,8 @@
         <v-row>
           <v-col align="center">
             <v-avatar
-              color="grey lighten-1"
-              size="248">
+              color="transparent"
+              size="250">
               <img :src="item.userImage">
             </v-avatar>
           </v-col>
@@ -32,7 +32,7 @@
         </v-row>
       </v-col>
 
-      <v-col>
+      <v-col class='private_office_edits'>
         <v-row><v-col></v-col></v-row>
 
         <v-row><v-col></v-col></v-row>
@@ -289,6 +289,10 @@ export default{
 
 
 <style scoped>
+.private_office_edits{
+  margin-left: 25%;
+  width: 50%;
+}
 #grid { 
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -315,8 +319,10 @@ export default{
     min-width: 150px;
     align-items: center;
     align-self: center;   
-    filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
     border-radius: 50%;    
+}
+.img:hover{
+  border: rgb(30, 100, 40) solid 5px;
 }
 
 .lable {

@@ -205,7 +205,7 @@ export default {
       dialog: false,
       menuItems: [
         {title:'Объявления', link:'/'},
-        //{title:'Интересное', link:'/Info'},
+        {title:'Интересное', link:'/Info'},
         {title:'О нас', link:'/AboutUs'}
       ]
     }

@@ -1,14 +1,13 @@
 <template>
-  <v-container fluid>
+  <!-- <v-container fluid>
     <v-row>
       <v-col cols="10">
         <v-row>
           <v-col class="text-right">
             <h1 class="profile-name">Добавление объявления</h1>
+            <v-btn :to="{name: 'PrivateOffice'}" color="grey lighten-2" rounded>Отменить</v-btn>
           </v-col>
-          <v-col class="text-center">
-            <v-btn :to="{name: 'PrivateOffice'}" color="grey lighten-2">Отменить</v-btn>
-          </v-col>
+            
         </v-row>
       </v-col>
       <v-col></v-col>
@@ -25,7 +24,7 @@
       <v-row>
         <v-col align="center">
           <v-btn 
-          large dark color="light-green"
+          large dark color=#22431F rounded
             @click='pickImage'>
             Добавить фото
           </v-btn>
@@ -39,7 +38,7 @@
 
       <v-row>
         <v-col align="center">
-          <v-btn large dark color="grey lighten-1"
+          <v-btn large dark color="grey lighten-1" rounded
           @click='deletePhoto'>
             Удалить фото
           </v-btn>
@@ -77,7 +76,7 @@
 
         <v-row>
           <v-col class="text-right">
-            <v-btn @click="submit()" large dark color="light-green">
+            <v-btn @click="submit()" large dark color=#22431F rounded>
               Опубликовать
             </v-btn>
           </v-col>
@@ -89,6 +88,59 @@
       </v-col>
     </v-row>
   </v-container>
+ -->
+ 
+  <div class=table>
+    <div class=col1>
+      <div class=row1>
+        <span class=h1_title>Новое объявление</span>
+      </div>
+
+      <div class=row2>
+        <div>
+        <img :src="photo" class="img">
+        </div>
+        <div style='margin:10px'>
+        <v-btn 
+          large dark color=#22431F rounded
+            @click='pickImage'>
+            Добавить фото</v-btn></div>
+        <div><v-btn large dark color="grey lighten-1" rounded
+          @click='deletePhoto'>
+            Удалить фото
+          </v-btn></div>
+      </div>
+    </div>
+    <div class=col2>
+      <div class=row1>
+        <v-btn :to="{name: 'PrivateOffice'}"  large dark color=#22431F rounded>Отменить</v-btn>
+      </div>
+      <div class=row1>
+        <v-text-field
+              ref="name"
+              v-model="name"
+              label="Введите имя и возраст"
+              rounded
+              solo
+              dense
+              background-color="grey lighten-2">
+            </v-text-field>
+            <v-textarea
+              ref="description"
+              v-model="description"
+              rows="12"
+              solo
+              label="Введите текст объявления"
+              background-color="grey lighten-2"
+              rounded>
+            </v-textarea>
+            <v-btn @click="submit()" large dark color=#22431F rounded>
+              Опубликовать
+            </v-btn>
+        <br>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -165,11 +217,38 @@ export default{
   min-width: 300px;
   align-items: center;
   align-self: center;   
-  filter: drop-shadow(0 5px 1px rgb(165, 165, 165));
   border-radius: 50%; 
 }
 .profile-name{
   color: #22431F;
+  text-align: center;
+  width:40%;
+  border:rgb(223, 106, 106) solid 1px;
+}
+.h1_title{
+  font-size:36px;
+  font-weight: bold;
+  color: #22431F;
+}
+.table{
+  display:flex;
+}
+.col1{
+  min-width:30%;
+  text-align: center;
+}
+.col2{
+  width:50%;
+}
+.row1{
+  margin:10px;
+  height:80px;
+  line-height: 80px;;
+  vertical-align: middle;
 }
 
+*{
+  font-family:Roboto;
+  bborder:red solid 1px;
+}
 </style>
